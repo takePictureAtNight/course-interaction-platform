@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="courseresourse.dao.UserDao">
+<mapper namespace="com.peking.courseresourse.dao.UserDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="courseresourse.entity.UserEntity" id="userMap">
+    <resultMap type="com.peking.courseresourse.entity.UserEntity" id="userMap">
         <result property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="password" column="password"/>
+        <result property="userId" column="user_id"/>
+        <result property="salt" column="salt"/>
     </resultMap>
 
 

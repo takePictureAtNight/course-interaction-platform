@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.peking.courseresourse.dao.DownloadAdminDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.peking.courseresourse.entity.DownloadAdminEntity" id="downloadAdminMap">
+        <result property="id" column="id"/>
+        <result property="fileName" column="file_name"/>
+        <result property="uploadTime" column="upload_time"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+
+</mapper>

@@ -4,11 +4,17 @@
     :close-on-click-modal="false"
     :visible.sync="visible">
     <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
-    <el-form-item label="" prop="username">
-      <el-input v-model="dataForm.username" placeholder=""></el-input>
+    <el-form-item label="用户名" prop="username">
+      <el-input v-model="dataForm.username" placeholder="用户名"></el-input>
     </el-form-item>
-    <el-form-item label="" prop="password">
-      <el-input v-model="dataForm.password" placeholder=""></el-input>
+    <el-form-item label="密码" prop="password">
+      <el-input v-model="dataForm.password" placeholder="密码"></el-input>
+    </el-form-item>
+    <el-form-item label="user_info表id" prop="userId">
+      <el-input v-model="dataForm.userId" placeholder="user_info表id"></el-input>
+    </el-form-item>
+    <el-form-item label="密码MD5盐" prop="salt">
+      <el-input v-model="dataForm.salt" placeholder="密码MD5盐"></el-input>
     </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -26,14 +32,22 @@
         dataForm: {
           id: 0,
           username: '',
-          password: ''
+          password: '',
+          userId: '',
+          salt: ''
         },
         dataRule: {
           username: [
-            { required: true, message: '不能为空', trigger: 'blur' }
+            { required: true, message: '用户名不能为空', trigger: 'blur' }
           ],
           password: [
-            { required: true, message: '不能为空', trigger: 'blur' }
+            { required: true, message: '密码不能为空', trigger: 'blur' }
+          ],
+          userId: [
+            { required: true, message: 'user_info表id不能为空', trigger: 'blur' }
+          ],
+          salt: [
+            { required: true, message: '密码MD5盐不能为空', trigger: 'blur' }
           ]
         }
       }
@@ -53,6 +67,8 @@
               if (data && data.code === 0) {
                 this.dataForm.username = data.user.username
                 this.dataForm.password = data.user.password
+                this.dataForm.userId = data.user.userId
+                this.dataForm.salt = data.user.salt
               }
             })
           }
@@ -68,7 +84,9 @@
               data: this.$http.adornData({
                 'id': this.dataForm.id || undefined,
                 'username': this.dataForm.username,
-                'password': this.dataForm.password
+                'password': this.dataForm.password,
+                'userId': this.dataForm.userId,
+                'salt': this.dataForm.salt
               })
             }).then(({data}) => {
               if (data && data.code === 0) {

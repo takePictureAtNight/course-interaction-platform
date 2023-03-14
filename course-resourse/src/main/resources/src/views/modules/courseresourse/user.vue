@@ -32,13 +32,25 @@
         prop="username"
         header-align="center"
         align="center"
-        label="">
+        label="用户名">
       </el-table-column>
       <el-table-column
         prop="password"
         header-align="center"
         align="center"
-        label="">
+        label="密码">
+      </el-table-column>
+      <el-table-column
+        prop="userId"
+        header-align="center"
+        align="center"
+        label="user_info表id">
+      </el-table-column>
+      <el-table-column
+        prop="salt"
+        header-align="center"
+        align="center"
+        label="密码MD5盐">
       </el-table-column>
       <el-table-column
         fixed="right"

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.peking.courseresourse.dao.WeeklyReportreCordsDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.peking.courseresourse.entity.WeeklyReportreCordsEntity" id="weeklyReportreCordsMap">
+        <result property="id" column="id"/>
+        <result property="internshipCommunity" column="internship_community"/>
+        <result property="internshipBegintime" column="internship_begintime"/>
+        <result property="internshipEndtime" column="internship_endtime"/>
+        <result property="workLocation" column="work_location"/>
+        <result property="weeklyreportName" column="weeklyreport_name"/>
+        <result property="keywords" column="keywords"/>
+        <result property="service Target" column="service _target"/>
+        <result property="uploadresourceDate" column="uploadresource_date"/>
+        <result property="resourceUrl" column="resource_url"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+    </resultMap>
+
+
+</mapper>
