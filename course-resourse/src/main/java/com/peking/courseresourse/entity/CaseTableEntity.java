@@ -1,5 +1,6 @@
 package com.peking.courseresourse.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -22,7 +23,7 @@ public class CaseTableEntity implements Serializable {
 	/**
 	 * 主键
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Integer id;
 	/**
 	 * 实习社区
@@ -80,5 +81,9 @@ public class CaseTableEntity implements Serializable {
 	 * 
 	 */
 	private Integer createBy;
+	/*
+	* 文件名称
+	* */
+	private String fileName;
 
 }

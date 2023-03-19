@@ -3,6 +3,10 @@ package com.peking.courseresourse.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import annotation.SysLog;
+import dto.UserDTO;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +19,7 @@ import com.peking.courseresourse.entity.UserEntity;
 import com.peking.courseresourse.service.UserService;
 import utils.PageUtils;
 import utils.R;
-
+import utils.UserHolder;
 
 
 /**
@@ -25,6 +29,7 @@ import utils.R;
  * @email 3110311633@qq.com
  * @date 2023-03-14 20:50:46
  */
+@Slf4j
 @RestController
 @RequestMapping("courseresourse/user")
 public class UserController {
@@ -35,19 +40,28 @@ public class UserController {
      * 列表
      */
     @GetMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = userService.queryPage(params);
 
         return R.ok().put("page", page);
     }
 
+    @PostMapping("/login")
+    public R login(@RequestBody UserEntity userEntity) {
+        log.info("login线程:{}", Thread.currentThread().getId());
+        UserDTO userDTO = new UserDTO();
+        BeanUtils.copyProperties(userEntity, userDTO);
+        log.info("userDTO" + userDTO);
+        UserHolder.saveUser(userDTO);
+        return R.ok("登录成功");
+    }
 
     /**
      * 信息
      */
     @GetMapping("/info/{id}")
-    public R info(@PathVariable("id") Integer id){
-		UserEntity user = userService.getById(id);
+    public R info(@PathVariable("id") Integer id) {
+        UserEntity user = userService.getById(id);
 
         return R.ok().put("user", user);
     }
@@ -56,8 +70,8 @@ public class UserController {
      * 保存
      */
     @PostMapping("/save")
-    public R save(@RequestBody UserEntity user){
-		userService.save(user);
+    public R save(@RequestBody UserEntity user) {
+        userService.save(user);
 
         return R.ok();
     }
@@ -66,8 +80,8 @@ public class UserController {
      * 修改
      */
     @PostMapping("/update")
-    public R update(@RequestBody UserEntity user){
-		userService.updateById(user);
+    public R update(@RequestBody UserEntity user) {
+        userService.updateById(user);
 
         return R.ok();
     }
@@ -75,9 +89,10 @@ public class UserController {
     /**
      * 删除
      */
+    @SysLog("删除用户")
     @GetMapping("/delete")
-    public R delete( Integer id){
-		userService.removeById(id);
+    public R delete(Integer id) {
+        userService.removeById(id);
         return R.ok();
     }
 
