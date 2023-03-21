@@ -1,7 +1,11 @@
 package com.peking.courseresourse.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.peking.courseresourse.entity.CaseTableEntity;
 import org.springframework.stereotype.Service;
+
 import java.util.Map;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -18,9 +22,17 @@ public class ElectronicJournalServiceImpl extends ServiceImpl<ElectronicJournalD
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
+        LambdaQueryWrapper<ElectronicJournalEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(ElectronicJournalEntity::getInternshipCommunity, params.get("internshipCommunity"))
+                .ge(params.get("internshipBegintime") != null, ElectronicJournalEntity::getInternshipBegintime, params.get("internshipBegintime"))
+                .ge(params.get("internshipEndtime") != null, ElectronicJournalEntity::getInternshipBegintime, params.get("internshipEndtime"))
+                .like(params.get("title") != null, ElectronicJournalEntity::getTitle, params.get("title"))
+                .eq(params.get("keywords") != null, ElectronicJournalEntity::getKeywords, params.get("keywords"))
+                .like(params.get("serviceTarget") != null, ElectronicJournalEntity::getServiceTarget, params.get("serviceTarget"))
+                .eq(ElectronicJournalEntity::getType, params.get("type"));
         IPage<ElectronicJournalEntity> page = this.page(
                 new Query<ElectronicJournalEntity>().getPage(params),
-                new QueryWrapper<ElectronicJournalEntity>()
+                lambdaQueryWrapper
         );
 
         return new PageUtils(page);
