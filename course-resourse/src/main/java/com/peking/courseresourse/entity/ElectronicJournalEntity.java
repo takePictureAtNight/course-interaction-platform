@@ -72,5 +72,9 @@ public class ElectronicJournalEntity implements Serializable {
 	 * 1代表通过审核，0代表待审核
 	 */
 	private String status;
+	/*
+	 * 文件名称
+	 * */
+	private String fileName;
 
 }

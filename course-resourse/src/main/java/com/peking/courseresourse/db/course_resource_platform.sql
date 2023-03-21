@@ -11,7 +11,7 @@
  Target Server Version : 80031
  File Encoding         : 65001
 
- Date: 20/03/2023 01:15:14
+ Date: 21/03/2023 08:41:33
 */
 
 SET NAMES utf8mb4;
@@ -172,7 +172,7 @@ CREATE TABLE `tab_case_table` (
   `create_by` int DEFAULT NULL,
   `file_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1026 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=1029 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of tab_case_table
@@ -193,6 +193,9 @@ INSERT INTO `tab_case_table` (`id`, `internship_community`, `internship_begintim
 INSERT INTO `tab_case_table` (`id`, `internship_community`, `internship_begintime`, `internship_endtime`, `work_location`, `participants`, `case_name`, `keywords`, `service_target`, `case_type`, `uploadresource_date`, `resource_url`, `type`, `status`, `create_by`, `file_name`) VALUES (1023, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '/Users/liuyu/workspace/java/-course-interaction-platform/course-resourse/target/classes/static/files/2023-03-2020230320005632453e2c3e-5aad-4372-a1ef-2c568ac15617.doc', NULL, NULL, NULL, '2020级《软件需求规格说明书》 模板要.doc');
 INSERT INTO `tab_case_table` (`id`, `internship_community`, `internship_begintime`, `internship_endtime`, `work_location`, `participants`, `case_name`, `keywords`, `service_target`, `case_type`, `uploadresource_date`, `resource_url`, `type`, `status`, `create_by`, `file_name`) VALUES (1024, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '/Users/liuyu/workspace/java/-course-interaction-platform/course-resourse/target/classes/static/files/2023-03-20/20230320005924c2811254-b142-456c-aeb1-8e9db546f7f6.doc', NULL, NULL, NULL, '2020级《软件需求规格说明书》 模板要.doc');
 INSERT INTO `tab_case_table` (`id`, `internship_community`, `internship_begintime`, `internship_endtime`, `work_location`, `participants`, `case_name`, `keywords`, `service_target`, `case_type`, `uploadresource_date`, `resource_url`, `type`, `status`, `create_by`, `file_name`) VALUES (1025, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '/Users/liuyu/workspace/java/-course-interaction-platform/course-resourse/target/classes/static/files/2023-03-20/202303200101435049ec1e-8961-43c2-b14f-04b7ec3a8bc2.doc', NULL, NULL, NULL, '2020级《软件需求规格说明书》 模板要.doc');
+INSERT INTO `tab_case_table` (`id`, `internship_community`, `internship_begintime`, `internship_endtime`, `work_location`, `participants`, `case_name`, `keywords`, `service_target`, `case_type`, `uploadresource_date`, `resource_url`, `type`, `status`, `create_by`, `file_name`) VALUES (1026, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '/Users/liuyu/workspace/java/-course-interaction-platform/course-resourse/target/classes/static/files/2023-03-20/20230320194341bc638671-e48b-4f23-8360-0c8d6c660ed5.doc', NULL, NULL, NULL, '2020级《软件需求规格说明书》 模板要.doc');
+INSERT INTO `tab_case_table` (`id`, `internship_community`, `internship_begintime`, `internship_endtime`, `work_location`, `participants`, `case_name`, `keywords`, `service_target`, `case_type`, `uploadresource_date`, `resource_url`, `type`, `status`, `create_by`, `file_name`) VALUES (1027, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '/Users/liuyu/workspace/java/-course-interaction-platform/course-resourse/target/classes/static/files/2023-03-20/202303201952230d333020-df83-4816-90ab-5db8143c672e.doc', NULL, NULL, NULL, '2020级《软件需求规格说明书》 模板要.doc');
+INSERT INTO `tab_case_table` (`id`, `internship_community`, `internship_begintime`, `internship_endtime`, `work_location`, `participants`, `case_name`, `keywords`, `service_target`, `case_type`, `uploadresource_date`, `resource_url`, `type`, `status`, `create_by`, `file_name`) VALUES (1028, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-03-20 19:56:26', '/Users/liuyu/workspace/java/-course-interaction-platform/course-resourse/target/classes/static/files/2023-03-20/2023032019562628fb3716-6767-4460-a6c2-85a9ad32653b.doc', NULL, NULL, NULL, '2020级《软件需求规格说明书》 模板要.doc');
 COMMIT;
 
 -- ----------------------------
@@ -213,6 +216,7 @@ CREATE TABLE `tab_electronic_journal` (
   `type` int NOT NULL COMMENT '1代表个人电子期刊，2代表小组电子期刊',
   `create_by` int NOT NULL COMMENT '电子期刊上传者id',
   `status` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '1代表通过审核，0代表待审核',
+  `file_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
@@ -237,6 +241,7 @@ CREATE TABLE `tab_product_design` (
   `resource_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '上传资源文件url',
   `status` int NOT NULL COMMENT '1代表通过审核，0代表待审核',
   `create_by` int DEFAULT NULL,
+  `file_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
@@ -260,6 +265,7 @@ CREATE TABLE `tab_project_report` (
   `resource_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '上传资源文件url',
   `status` int NOT NULL COMMENT '1代表通过审核，0代表待审核',
   `create_by` int DEFAULT NULL,
+  `file_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
@@ -309,6 +315,7 @@ CREATE TABLE `tab_weekly_reportre_cords` (
   `resource_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '上传资源文件url',
   `status` int NOT NULL COMMENT '1代表通过审核，0代表待审核',
   `create_by` int NOT NULL,
+  `file_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 

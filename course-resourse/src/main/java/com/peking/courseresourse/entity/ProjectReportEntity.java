@@ -56,5 +56,8 @@ public class ProjectReportEntity implements Serializable {
 	 * 
 	 */
 	private Integer createBy;
-
+	/*
+	 * 文件名称
+	 * */
+	private String fileName;
 }

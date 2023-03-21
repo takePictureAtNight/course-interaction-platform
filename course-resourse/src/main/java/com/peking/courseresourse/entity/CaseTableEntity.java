@@ -1,8 +1,6 @@
 package com.peking.courseresourse.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -64,6 +62,7 @@ public class CaseTableEntity implements Serializable {
 	/**
 	 * 上传资源日期
 	 */
+	@TableField(fill = FieldFill.INSERT)
 	private Date uploadresourceDate;
 	/**
 	 * 上传资源文件url

@@ -13,6 +13,8 @@ import java.util.UUID;
 
 import annotation.SysLog;
 import cn.hutool.core.io.FileUtil;
+import com.peking.courseresourse.entity.*;
+import com.peking.courseresourse.service.*;
 import dto.CaseTableDTO;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
@@ -26,8 +28,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.peking.courseresourse.entity.CaseTableEntity;
-import com.peking.courseresourse.service.CaseTableService;
 import org.springframework.web.multipart.MultipartFile;
 import utils.PageUtils;
 import utils.R;
@@ -41,11 +41,20 @@ import javax.servlet.http.HttpServletResponse;
  * @email 3110311633@qq.com
  * @date 2023-03-14 20:49:11
  */
+
 @RestController
 @RequestMapping("courseresourse/casetable")
 public class CaseTableController {
     @Autowired
     private CaseTableService caseTableService;
+    @Autowired
+    private ElectronicJournalService electronicJournalService;
+    @Autowired
+    private WeeklyReportreCordsService reportreCordsService;
+    @Autowired
+    private ProductDesignService designService;
+    @Autowired
+    private ProjectReportService projectReportService;
 
     /**
      * 列表(用户所有)
@@ -68,17 +77,46 @@ public class CaseTableController {
 
 
     /**
+     * 通用下载接口
      *
-     * @param id   上传文件的id
+     * @param id       上传文件的id
+     * @param type     案例库,电子期刊  规定 案例库为0 电子期刊为1 周报记录2 产品设计 3 项目报告4
      * @param response
      * @return
      * @throws IOException
      */
     @GetMapping("/download")
-    public R download(Integer id, HttpServletResponse response) throws IOException {
-        CaseTableEntity caseTable = caseTableService.getById(id);
-        String resourceUrl = caseTable.getResourceUrl();
-        response.setHeader("content-disposition","attachment;filename="+ URLEncoder.encode(caseTable.getFileName(),"UTF-8"));
+    public R download(Integer id, Integer type, HttpServletResponse response) throws IOException {
+        String resourceUrl = "";
+        switch (type) {
+            case 0:
+                CaseTableEntity caseTable = caseTableService.getById(id);
+                resourceUrl = caseTable.getResourceUrl();
+                response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(caseTable.getFileName(), "UTF-8"));
+                break;
+            case 1:
+                ElectronicJournalEntity journalEntity = electronicJournalService.getById(id);
+                resourceUrl = journalEntity.getResourceUrl();
+                response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(journalEntity.getFileName(), "UTF-8"));
+                break;
+            case 2:
+                WeeklyReportreCordsEntity reportEntity = reportreCordsService.getById(id);
+                resourceUrl = reportEntity.getResourceUrl();
+                response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(reportEntity.getFileName(), "UTF-8"));
+                break;
+            case 3:
+                ProductDesignEntity designEntity = designService.getById(id);
+                resourceUrl = designEntity.getResourceUrl();
+                response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(designEntity.getFileName(), "UTF-8"));
+                break;
+            case 4:
+                ProjectReportEntity projectReportEntity = projectReportService.getById(id);
+                resourceUrl = projectReportEntity.getResourceUrl();
+                response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(projectReportEntity.getFileName(), "UTF-8"));
+                break;
+            default:
+                return R.error("文件下载失败");
+        }
         byte[] bytes = FileUtil.readBytes(resourceUrl);
         OutputStream outputStream = response.getOutputStream();
         outputStream.write(bytes);
@@ -88,7 +126,6 @@ public class CaseTableController {
     }
 
     /**
-     *
      * @param caseTableDTO 前端传过来的dto
      * @return
      * @throws IOException
@@ -96,17 +133,17 @@ public class CaseTableController {
     @PostMapping("/upload")
     public R upload(CaseTableDTO caseTableDTO) throws IOException {
         MultipartFile[] files = caseTableDTO.getFiles();
-        if(files == null || files.length == 0){
+        if (files == null || files.length == 0) {
             return R.error("上传文件不能为空");
         }
         for (MultipartFile file : files) {
             String originalFilename = file.getOriginalFilename();
             String extension = FilenameUtils.getExtension(file.getOriginalFilename());
             System.out.println(extension);
-            if(!".doc".equals("."+extension) && !".docx".equals("."+extension)){
+            if (!".doc".equals("." + extension) && !".docx".equals("." + extension)) {
                 return R.error("文件格式错误无法上传");
             }
-            String newFilename = new SimpleDateFormat("yyyMMddHHmmss").format(new Date()) + UUID.randomUUID() +"."+extension;
+            String newFilename = new SimpleDateFormat("yyyMMddHHmmss").format(new Date()) + UUID.randomUUID() + "." + extension;
             String path = ResourceUtils.getURL("classpath:").getPath() + "static/files";
             System.out.println(path);
             String format = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
@@ -118,8 +155,8 @@ public class CaseTableController {
             try {
                 file.transferTo(new File(datePath, newFilename));
                 CaseTableEntity caseTableEntity = new CaseTableEntity();
-                BeanUtils.copyProperties(caseTableDTO,caseTableEntity);
-                caseTableEntity.setResourceUrl(path+"/"+format+"/"+newFilename);
+                BeanUtils.copyProperties(caseTableDTO, caseTableEntity);
+                caseTableEntity.setResourceUrl(path + "/" + format + "/" + newFilename);
                 caseTableEntity.setFileName(originalFilename);
                 caseTableService.save(caseTableEntity);
             } catch (Exception e) {
@@ -129,34 +166,34 @@ public class CaseTableController {
         return R.ok("上传成功");
     }
 
-        /**
-         * 保存
-         */
-        @PostMapping("/save")
-        public R save (@RequestBody CaseTableEntity caseTable){
-            caseTableService.save(caseTable);
+    /**
+     * 保存
+     */
+    @PostMapping("/save")
+    public R save(@RequestBody CaseTableEntity caseTable) {
+        caseTableService.save(caseTable);
 
-            return R.ok();
-        }
-
-        /**
-         * 修改
-         */
-        @PostMapping("/update")
-        public R update (@RequestBody CaseTableEntity caseTable){
-            caseTableService.updateById(caseTable);
-
-            return R.ok();
-        }
-
-        /**
-         * 删除
-         */
-        @SysLog("删除")
-        @GetMapping("/delete")
-        public R delete (Integer id){
-            caseTableService.removeById(id);
-            return R.ok();
-        }
-
+        return R.ok();
     }
+
+    /**
+     * 修改
+     */
+    @PostMapping("/update")
+    public R update(@RequestBody CaseTableEntity caseTable) {
+        caseTableService.updateById(caseTable);
+
+        return R.ok();
+    }
+
+    /**
+     * 删除
+     */
+    @SysLog("删除")
+    @GetMapping("/delete")
+    public R delete(Integer id) {
+        caseTableService.removeById(id);
+        return R.ok();
+    }
+
+}
