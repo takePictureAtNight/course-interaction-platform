@@ -30,7 +30,7 @@ public class ElectronicJournalServiceImpl extends ServiceImpl<ElectronicJournalD
         lambdaQueryWrapper//.eq(ElectronicJournalEntity::getCreateBy,user.getId())
                 .eq(ElectronicJournalEntity::getInternshipCommunity, params.get("internshipCommunity"))
                 .ge(params.get("internshipBegintime") != null, ElectronicJournalEntity::getInternshipBegintime, params.get("internshipBegintime"))
-                .le(params.get("internshipEndtime") != null, ElectronicJournalEntity::getInternshipBegintime, params.get("internshipEndtime"))
+                .le(params.get("internshipEndtime") != null, ElectronicJournalEntity::getInternshipEndtime, params.get("internshipEndtime"))
                 .like(params.get("title") != null, ElectronicJournalEntity::getTitle, params.get("title"))
                 .eq(params.get("keywords") != null, ElectronicJournalEntity::getKeywords, params.get("keywords"))
                 .like(params.get("serviceTarget") != null, ElectronicJournalEntity::getServiceTarget, params.get("serviceTarget"))

@@ -29,7 +29,7 @@ public class CaseTableServiceImpl extends ServiceImpl<CaseTableDao, CaseTableEnt
         lambdaQueryWrapper//eq(CaseTableEntity::getCreateBy, user.getId())
                 .eq(CaseTableEntity::getInternshipCommunity, params.get("internshipCommunity"))
                 .ge(params.get("internshipBegintime") != null, CaseTableEntity::getInternshipBegintime, params.get("internshipBegintime"))
-                .le(params.get("internshipBegintime") != null, CaseTableEntity::getInternshipBegintime, params.get("internshipBegintime"))
+                .le(params.get("internshipEndtime") != null, CaseTableEntity::getInternshipEndtime, params.get("internshipEndtime"))
                 .like(params.get("caseName") != null, CaseTableEntity::getCaseName, params.get("caseName"))
                 .eq(params.get("keywords") != null, CaseTableEntity::getKeywords, params.get("keywords"))
                 .like(params.get("serviceTarget") != null, CaseTableEntity::getServiceTarget, params.get("serviceTarget"))
