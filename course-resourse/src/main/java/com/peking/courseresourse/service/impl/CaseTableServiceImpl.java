@@ -1,5 +1,6 @@
 package com.peking.courseresourse.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import dto.UserDTO;
 import org.springframework.stereotype.Service;
 
@@ -23,21 +24,20 @@ public class CaseTableServiceImpl extends ServiceImpl<CaseTableDao, CaseTableEnt
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         UserDTO user = UserHolder.getUser();
-        QueryWrapper<CaseTableEntity> wrapper = new QueryWrapper<>();
-        wrapper.eq("create_by", user.getId());
-        //模糊查询拼接wrapper
-         String internshipCommunity = (String) params.get("internshipCommunity");
-        if(internshipCommunity!=null){
-            wrapper.eq("internship_community",internshipCommunity);
-        }
-        String internshipBegintime = (String) params.get("internshipBegintime");
-        if(internshipBegintime!=null){
-            wrapper.eq("internship_begintime",internshipBegintime);
-        }
-       //......
+
+        LambdaQueryWrapper<CaseTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper//eq(CaseTableEntity::getCreateBy, user.getId())
+                .eq(CaseTableEntity::getInternshipCommunity, params.get("internshipCommunity"))
+                .ge(params.get("internshipBegintime") != null, CaseTableEntity::getInternshipBegintime, params.get("internshipBegintime"))
+                .le(params.get("internshipBegintime") != null, CaseTableEntity::getInternshipBegintime, params.get("internshipBegintime"))
+                .like(params.get("caseName") != null, CaseTableEntity::getCaseName, params.get("caseName"))
+                .eq(params.get("keywords") != null, CaseTableEntity::getKeywords, params.get("keywords"))
+                .like(params.get("serviceTarget") != null, CaseTableEntity::getServiceTarget, params.get("serviceTarget"))
+                .eq(CaseTableEntity::getCaseType, params.get("caseType"))
+                .eq(CaseTableEntity::getType, params.get("type"));
         IPage<CaseTableEntity> page = this.page(
                 new Query<CaseTableEntity>().getPage(params),
-                wrapper
+                lambdaQueryWrapper
         );
         return new PageUtils(page);
     }

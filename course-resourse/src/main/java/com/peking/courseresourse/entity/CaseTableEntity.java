@@ -80,9 +80,14 @@ public class CaseTableEntity implements Serializable {
 	 * 
 	 */
 	private Integer createBy;
-	/*
+	/**
 	* 文件名称
-	* */
+	*/
 	private String fileName;
 
+	/**
+	 * 逻辑删除，未删除未0，已删除未1
+	 */
+	@TableLogic(value = "0",delval = "1")
+	private int deleteFlag;
 }
