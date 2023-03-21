@@ -1,6 +1,7 @@
 package com.peking.courseresourse.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
@@ -56,8 +57,13 @@ public class ProjectReportEntity implements Serializable {
 	 * 
 	 */
 	private Integer createBy;
-	/*
+	/**
 	 * 文件名称
-	 * */
+	 */
 	private String fileName;
+	/**
+	 * 逻辑删除，未删除未0，已删除未1
+	 */
+	@TableLogic(value = "0", delval = "1")
+	private int deleteFlag;
 }
