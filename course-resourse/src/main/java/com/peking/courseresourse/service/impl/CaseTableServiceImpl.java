@@ -1,14 +1,21 @@
 package com.peking.courseresourse.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import dto.CaseTableDTO;
+import dto.UploadDTO;
 import dto.UserDTO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.web.multipart.MultipartFile;
+import utils.FileUtils;
 import utils.PageUtils;
 import utils.Query;
 
@@ -40,6 +47,22 @@ public class CaseTableServiceImpl extends ServiceImpl<CaseTableDao, CaseTableEnt
                 lambdaQueryWrapper
         );
         return new PageUtils(page);
+    }
+
+    @Override
+    public void saveAll(CaseTableDTO caseTable) {
+        MultipartFile[] files = caseTable.getFiles();
+        List<UploadDTO> list = FileUtils.upload(files);
+        List<CaseTableEntity> caseTableEntityList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            CaseTableEntity caseTable1 = new CaseTableEntity();
+            BeanUtils.copyProperties(caseTable,caseTable1);
+            UploadDTO uploadDTO = list.get(i);
+            caseTable1.setFileName(uploadDTO.getOriginalFilename());
+            caseTable1.setResourceUrl(uploadDTO.getResourceUrl());
+            caseTableEntityList.add(caseTable1);
+        }
+        this.saveBatch(caseTableEntityList);
     }
 
 }
