@@ -42,7 +42,7 @@ public class CaseTableEntity implements Serializable {
 	/**
 	 * 参与人员
 	 */
-	private Integer participants;
+	private String participants;
 	/**
 	 * 案例名称
 	 */
