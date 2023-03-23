@@ -1,5 +1,6 @@
 package com.peking.courseresourse.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -68,5 +69,6 @@ public class ProductDesignEntity implements Serializable {
      * 逻辑删除，未删除未0，已删除未1
      */
     @TableLogic(value = "0", delval = "1")
+    @TableField(select = false)
     private int deleteFlag;
 }

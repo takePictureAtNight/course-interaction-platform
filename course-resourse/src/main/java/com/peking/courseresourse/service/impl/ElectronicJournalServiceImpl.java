@@ -25,7 +25,7 @@ public class ElectronicJournalServiceImpl extends ServiceImpl<ElectronicJournalD
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         UserDTO user = UserHolder.getUser();
-
+       //个人和小组电子期刊搜索条件
         LambdaQueryWrapper<ElectronicJournalEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper//.eq(ElectronicJournalEntity::getCreateBy,user.getId())
                 .eq(ElectronicJournalEntity::getInternshipCommunity, params.get("internshipCommunity"))

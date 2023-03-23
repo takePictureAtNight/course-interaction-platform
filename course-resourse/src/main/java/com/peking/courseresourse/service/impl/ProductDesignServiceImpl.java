@@ -24,6 +24,7 @@ public class ProductDesignServiceImpl extends ServiceImpl<ProductDesignDao, Prod
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         UserDTO user = UserHolder.getUser();
+        //产品设计搜索条件
         LambdaQueryWrapper<ProductDesignEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper//.eq(ProductDesignEntity::getCreateBy,user.getId())
                 .eq(params.get("designName") != null, ProductDesignEntity::getDesignName, params.get("designName"))

@@ -89,5 +89,6 @@ public class CaseTableEntity implements Serializable {
 	 * 逻辑删除，未删除未0，已删除未1
 	 */
 	@TableLogic(value = "0",delval = "1")
+	@TableField(select = false)
 	private int deleteFlag;
 }

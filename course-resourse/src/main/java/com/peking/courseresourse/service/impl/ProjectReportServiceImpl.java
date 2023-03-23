@@ -24,6 +24,7 @@ public class ProjectReportServiceImpl extends ServiceImpl<ProjectReportDao, Proj
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         UserDTO user = UserHolder.getUser();
+        //项目报告搜索条件
         LambdaQueryWrapper<ProjectReportEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper//.eq(ProjectReportEntity::getCreateBy,user.getId())
                 .eq(params.get("projectName") != null, ProjectReportEntity::getProjectName, params.get("projectName"))

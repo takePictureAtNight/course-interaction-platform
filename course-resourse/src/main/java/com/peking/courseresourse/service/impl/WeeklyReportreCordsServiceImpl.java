@@ -25,6 +25,7 @@ public class WeeklyReportreCordsServiceImpl extends ServiceImpl<WeeklyReportreCo
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         UserDTO user = UserHolder.getUser();
+        //周报记录搜索条件
         LambdaQueryWrapper<WeeklyReportreCordsEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper//.eq(WeeklyReportreCordsEntity::getCreateBy,user.getId())
                 .eq(WeeklyReportreCordsEntity::getInternshipCommunity, params.get("internshipCommunity"))

@@ -32,6 +32,7 @@ public class CaseTableServiceImpl extends ServiceImpl<CaseTableDao, CaseTableEnt
     public PageUtils queryPage(Map<String, Object> params) {
         UserDTO user = UserHolder.getUser();
 
+        //典型案例和小组活动案例搜索条件
         LambdaQueryWrapper<CaseTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper//eq(CaseTableEntity::getCreateBy, user.getId())
                 .eq(CaseTableEntity::getInternshipCommunity, params.get("internshipCommunity"))
