@@ -165,14 +165,14 @@ public class CaseTableController {
 //        return R.ok("上传成功");
 //    }
 //
-//    /**
-//     * 保存
-//     */
-//    @PostMapping("/save")
-//    public R save(CaseTableDTO caseTable) {
-//        caseTableService.saveAll(caseTable);
-//        return R.ok();
-//    }
+    /**
+     * 保存
+     */
+    @PostMapping("/save")
+    public R save(CaseTableDTO caseTable) {
+        caseTableService.saveAll(caseTable);
+        return R.ok();
+    }
 
     /**
      * 修改

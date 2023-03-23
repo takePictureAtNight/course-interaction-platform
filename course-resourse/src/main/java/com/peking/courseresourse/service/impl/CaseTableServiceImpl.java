@@ -1,10 +1,12 @@
 package com.peking.courseresourse.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.peking.courseresourse.service.FileService;
 import dto.CaseTableDTO;
 import dto.UploadDTO;
 import dto.UserDTO;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,7 +29,8 @@ import utils.UserHolder;
 
 @Service("caseTableService")
 public class CaseTableServiceImpl extends ServiceImpl<CaseTableDao, CaseTableEntity> implements CaseTableService {
-
+    @Autowired
+    private FileService fileService;
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         UserDTO user = UserHolder.getUser();
@@ -53,7 +56,7 @@ public class CaseTableServiceImpl extends ServiceImpl<CaseTableDao, CaseTableEnt
     @Override
     public void saveAll(CaseTableDTO caseTable) {
         MultipartFile[] files = caseTable.getFiles();
-        List<UploadDTO> list = FileUtils.upload(files);
+        List<UploadDTO> list = fileService.upload(files);
         List<CaseTableEntity> caseTableEntityList = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             CaseTableEntity caseTable1 = new CaseTableEntity();

@@ -41,43 +41,12 @@ public class FileController {
     private ProductDesignService designService;
     @Autowired
     private ProjectReportService projectReportService;
-
+    @Autowired
+    private FileService fileService;
     @PostMapping("/upload")
     public R upload(MultipartFile[] files) throws Exception {
-        if (files == null || files.length == 0) {
-            throw new RException("上传文件不能为空");
-//            return R.error("上传文件不能为空");
-        }
-        //返回数组
-        List<UploadDTO> list = new ArrayList<>();
-        for (MultipartFile file : files) {
-            String originalFilename = file.getOriginalFilename();
-            String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-            System.out.println(extension);
-            if (!".doc".equals("." + extension) && !".docx".equals("." + extension)) {
-                throw new RException("文件格式错误无法上传");
-            }
-            String newFilename = new SimpleDateFormat("yyyMMddHHmmss").format(new Date()) + UUID.randomUUID() + "." + extension;
-            String path = ResourceUtils.getURL("classpath:").getPath() + "static/files";
-            System.out.println(path);
-            String format = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-            String dateDirPath = path + "/" + format;
-            File datePath = new File(dateDirPath);
-            if (!datePath.exists()) {
-                datePath.mkdirs();
-            }
-            try {
-                file.transferTo(new File(datePath, newFilename));
-                UploadDTO u = new UploadDTO();
-                String resourceUrl = path + "/" + format + "/" + newFilename;
-                u.setResourceUrl(resourceUrl);
-                u.setOriginalFilename(originalFilename);
-                list.add(u);
-            } catch (Exception e) {
-                throw new RException("上传失败");
-            }
-        }
-        return R.ok("上传成功").put("data",list);
+        fileService.upload(files);
+        return R.ok("上传成功");
     }
     //通用下载接口
     /**
