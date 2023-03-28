@@ -41,4 +41,50 @@ public class UserEntity implements Serializable {
 	 */
 	private String salt;
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+
+
+	public String getUserName() {
+		return username;
+	}
+
+	public void setUserName(String userName) {
+		this.username = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Integer getuserId() {
+		return userId;
+	}
+
+	public void setuserId(Integer userIdid) {
+		this.userId = userId;
+	}
+
+
+	public UserEntity() {
+	}
+
+
+
+
+
+
+
+
+
 }
