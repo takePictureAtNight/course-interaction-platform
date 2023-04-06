@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.peking.courseresourse.dao.NoticeDao">
+    <parameterMap id="noticeParamMap" type="com.peking.courseresourse.entity.NoticeEntity">
+        <parameter property="createTime" resultMap="noticeResMap"/>
+        <parameter property="updateTime" resultMap="noticeResMap"/>
+    </parameterMap>
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap id="noticeResMap" type="com.peking.courseresourse.entity.NoticeEntity">
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <insert id="insertNotice" parameterMap="noticeParamMap">
+        insert into notice(title, content, create_time, update_time)
+        VALUES (#{title}, #{content}, now(), now())
+    </insert>
+
+    <update id="updateNotice" parameterMap="noticeParamMap">
+        update notice
+        set title=#{title},
+            content=#{content},
+            update_time=now()
+        where id = #{id}
+    </update>
+
+</mapper>
