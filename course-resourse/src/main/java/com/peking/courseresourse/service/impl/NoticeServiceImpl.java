@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 
-@Service("notificationsService")
+@Service("noticeService")
 public class NoticeServiceImpl extends ServiceImpl<NoticeDao, NoticeEntity> implements NoticeService {
     @Autowired
     private NoticeDao noticeDao;
