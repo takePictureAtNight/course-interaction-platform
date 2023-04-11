@@ -1,43 +1,29 @@
 package com.peking.courseresourse.service.impl;
 
+import org.springframework.stereotype.Service;
+import java.util.Map;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import utils.PageUtils;
+import utils.Query;
+
 import com.peking.courseresourse.dao.NoticeDao;
 import com.peking.courseresourse.entity.NoticeEntity;
 import com.peking.courseresourse.service.NoticeService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 @Service("noticeService")
 public class NoticeServiceImpl extends ServiceImpl<NoticeDao, NoticeEntity> implements NoticeService {
-    @Autowired
-    private NoticeDao noticeDao;
 
     @Override
-    public List<NoticeEntity> selectAll() {
-        return noticeDao.selectAll();
-    }
+    public PageUtils queryPage(Map<String, Object> params) {
+        IPage<NoticeEntity> page = this.page(
+                new Query<NoticeEntity>().getPage(params),
+                new QueryWrapper<NoticeEntity>()
+        );
 
-    @Override
-    public NoticeEntity selectById(int id) {
-        return noticeDao.selectById(id);
-    }
-
-    @Override
-    public int deleteById(int id) {
-        return noticeDao.deleteById(id);
-    }
-
-    @Override
-    public int insertNotice(NoticeEntity notice) {
-        return noticeDao.insertNotice(notice);
-    }
-
-    @Override
-    public int updateNotice(NoticeEntity notice) {
-        return noticeDao.updateNotice(notice);
+        return new PageUtils(page);
     }
 
 }
