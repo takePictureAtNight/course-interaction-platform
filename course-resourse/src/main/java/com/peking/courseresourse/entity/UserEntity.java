@@ -2,10 +2,9 @@ package com.peking.courseresourse.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 
 /**
  * 仅该表中的用户可登录系统
@@ -78,12 +77,6 @@ public class UserEntity implements Serializable {
 
 	public UserEntity() {
 	}
-
-
-
-
-
-
 
 
 

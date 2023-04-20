@@ -1,20 +1,22 @@
 package com.peking.courseresourse.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import utils.PageUtils;
 import com.peking.courseresourse.entity.PermissionEntity;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
-/**
- * 
- *
- * @author yy
- * @email 3110311633@qq.com
- * @date 2023-03-14 20:50:46
- */
+
 public interface PermissionService extends IService<PermissionEntity> {
 
-    PageUtils queryPage(Map<String, Object> params);
+    Map<String, Object> toTree(HttpServletRequest request);
+
+
+    List<PermissionEntity> treeSelect();
+
+
+    void removeMenu(Integer id);
 }
+
 
