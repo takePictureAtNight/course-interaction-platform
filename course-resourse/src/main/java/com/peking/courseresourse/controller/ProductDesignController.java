@@ -17,10 +17,7 @@ import utils.PageUtils;
 import utils.R;
 
 
-
 /**
- * 
- *
  * @author yy
  * @email 3110311633@qq.com
  * @date 2023-03-14 20:49:11
@@ -35,7 +32,7 @@ public class ProductDesignController {
      * 列表
      */
     @GetMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = productDesignService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -46,8 +43,8 @@ public class ProductDesignController {
      * 信息
      */
     @GetMapping("/info/{id}")
-    public R info(@PathVariable("id") Integer id){
-		ProductDesignEntity productDesign = productDesignService.getById(id);
+    public R info(@PathVariable("id") Integer id) {
+        ProductDesignEntity productDesign = productDesignService.getById(id);
 
         return R.ok().put("productDesign", productDesign);
     }
@@ -56,8 +53,8 @@ public class ProductDesignController {
      * 保存
      */
     @PostMapping("/save")
-    public R save(@RequestBody ProductDesignEntity productDesign){
-		productDesignService.save(productDesign);
+    public R save(@RequestBody ProductDesignEntity productDesign) {
+        productDesignService.save(productDesign);
 
         return R.ok();
     }
@@ -65,19 +62,19 @@ public class ProductDesignController {
     /**
      * 修改
      */
-    @PostMapping("/update")
-    public R update(@RequestBody ProductDesignEntity productDesign){
-		productDesignService.updateById(productDesign);
+    @PostMapping("/updateStatus")
+    public R update(@RequestParam Integer id, @RequestParam String status, @RequestParam String returnReason) {
+        //修改产品设计的审核状态
+        return productDesignService.updateStatus(id, status, returnReason);
 
-        return R.ok();
     }
 
     /**
      * 删除
      */
     @GetMapping("/delete")
-    public R delete( Integer id){
-		productDesignService.removeById(id);
+    public R delete(Integer id) {
+        productDesignService.removeById(id);
         return R.ok();
     }
 

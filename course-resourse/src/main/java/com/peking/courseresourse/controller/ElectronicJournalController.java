@@ -1,6 +1,6 @@
 package com.peking.courseresourse.controller;
 
-import java.util.Arrays;
+
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +17,7 @@ import utils.PageUtils;
 import utils.R;
 
 
-
 /**
- * 
- *
  * @author yy
  * @email 3110311633@qq.com
  * @date 2023-03-14 20:49:11
@@ -35,7 +32,7 @@ public class ElectronicJournalController {
      * 列表
      */
     @GetMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = electronicJournalService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -46,8 +43,8 @@ public class ElectronicJournalController {
      * 信息
      */
     @GetMapping("/info/{id}")
-    public R info(@PathVariable("id") Integer id){
-		ElectronicJournalEntity electronicJournal = electronicJournalService.getById(id);
+    public R info(@PathVariable("id") Integer id) {
+        ElectronicJournalEntity electronicJournal = electronicJournalService.getById(id);
 
         return R.ok().put("electronicJournal", electronicJournal);
     }
@@ -56,8 +53,8 @@ public class ElectronicJournalController {
      * 保存
      */
     @PostMapping("/save")
-    public R save(@RequestBody ElectronicJournalEntity electronicJournal){
-		electronicJournalService.save(electronicJournal);
+    public R save(@RequestBody ElectronicJournalEntity electronicJournal) {
+        electronicJournalService.save(electronicJournal);
 
         return R.ok();
     }
@@ -65,19 +62,19 @@ public class ElectronicJournalController {
     /**
      * 修改
      */
-    @PostMapping("/update")
-    public R update(@RequestBody ElectronicJournalEntity electronicJournal){
-		electronicJournalService.updateById(electronicJournal);
+    @PostMapping("/updateStatus")
+    public R update(@RequestParam Integer id, @RequestParam String status, @RequestParam String returnReason) {
+        //修改电子期刊的审核状态
+        return electronicJournalService.updateStatus(id, status, returnReason);
 
-        return R.ok();
     }
 
     /**
      * 删除
      */
     @GetMapping("/delete")
-    public R delete( Integer id){
-		electronicJournalService.removeById(id);
+    public R delete(Integer id) {
+        electronicJournalService.removeById(id);
         return R.ok();
     }
 

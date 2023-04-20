@@ -65,11 +65,11 @@ public class WeeklyReportreCordsController {
     /**
      * 修改
      */
-    @PostMapping("/update")
-    public R update(@RequestBody WeeklyReportreCordsEntity weeklyReportreCords){
-		weeklyReportreCordsService.updateById(weeklyReportreCords);
+    @PostMapping("/updateStatus")
+    public R update(@RequestParam Integer id, @RequestParam String status, @RequestParam String returnReason) {
+        //修改周报记录的审核状态
+        return weeklyReportreCordsService.updateStatus(id, status, returnReason);
 
-        return R.ok();
     }
 
     /**

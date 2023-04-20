@@ -1,22 +1,22 @@
 package com.peking.courseresourse.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.peking.courseresourse.entity.CaseTableEntity;
-import dto.UserDTO;
-import org.springframework.stereotype.Service;
-
-import java.util.Map;
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import utils.PageUtils;
-import utils.Query;
-
 import com.peking.courseresourse.dao.ElectronicJournalDao;
 import com.peking.courseresourse.entity.ElectronicJournalEntity;
 import com.peking.courseresourse.service.ElectronicJournalService;
+import dto.UserDTO;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import utils.PageUtils;
+import utils.Query;
+import utils.R;
 import utils.UserHolder;
+
+import java.util.Map;
 
 
 @Service("electronicJournalService")
@@ -25,7 +25,7 @@ public class ElectronicJournalServiceImpl extends ServiceImpl<ElectronicJournalD
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         UserDTO user = UserHolder.getUser();
-       //个人和小组电子期刊搜索条件
+        //个人和小组电子期刊搜索条件
         LambdaQueryWrapper<ElectronicJournalEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper//.eq(ElectronicJournalEntity::getCreateBy,user.getId())
                 .eq(ElectronicJournalEntity::getInternshipCommunity, params.get("internshipCommunity"))
@@ -41,6 +41,23 @@ public class ElectronicJournalServiceImpl extends ServiceImpl<ElectronicJournalD
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    @Transactional
+    public R updateStatus(Integer id, String status, String returnReason) {
+        LambdaUpdateWrapper<ElectronicJournalEntity> updateWrapper = new LambdaUpdateWrapper<>();
+
+        updateWrapper.eq(ElectronicJournalEntity::getId, id);//作为条件
+        updateWrapper.set(ElectronicJournalEntity::getStatus, status);//设置想要更新的字段
+        updateWrapper.set(ElectronicJournalEntity::getReturnReason, returnReason);//设置想要更新的字段
+
+
+        //这里的实体类设置为空
+        if (!update(null, updateWrapper)) {
+            return R.error("修改失败");
+        }
+        return R.ok();
     }
 
 }

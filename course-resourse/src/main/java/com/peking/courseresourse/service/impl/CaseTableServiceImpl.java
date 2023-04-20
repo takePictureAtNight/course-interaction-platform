@@ -1,6 +1,8 @@
 package com.peking.courseresourse.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.peking.courseresourse.entity.ElectronicJournalEntity;
 import com.peking.courseresourse.service.FileService;
 import dto.CaseTableDTO;
 import dto.UploadDTO;
@@ -16,15 +18,13 @@ import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import utils.FileUtils;
-import utils.PageUtils;
-import utils.Query;
+import utils.*;
 
 import com.peking.courseresourse.dao.CaseTableDao;
 import com.peking.courseresourse.entity.CaseTableEntity;
 import com.peking.courseresourse.service.CaseTableService;
-import utils.UserHolder;
 
 
 @Service("caseTableService")
@@ -67,6 +67,23 @@ public class CaseTableServiceImpl extends ServiceImpl<CaseTableDao, CaseTableEnt
             caseTableEntityList.add(caseTable1);
         }
         this.saveBatch(caseTableEntityList);
+    }
+
+    @Override
+    @Transactional
+    public R updateStatus(Integer id, String status, String returnReason) {
+        LambdaUpdateWrapper<CaseTableEntity> updateWrapper = new LambdaUpdateWrapper<>();
+
+
+        updateWrapper.eq(CaseTableEntity::getId, id);//作为条件
+        updateWrapper.set(CaseTableEntity::getStatus, status);//设置想要更新的字段
+        updateWrapper.set(CaseTableEntity::getReturnReason, returnReason);//设置想要更新的字段
+
+        //这里的实体类设置为空
+        if (!update(null, updateWrapper)) {
+            return R.error("修改失败");
+        }
+        return R.ok();
     }
 
 }

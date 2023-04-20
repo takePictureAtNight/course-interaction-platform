@@ -65,11 +65,11 @@ public class ProjectReportController {
     /**
      * 修改
      */
-    @PostMapping("/update")
-    public R update(@RequestBody ProjectReportEntity projectReport){
-		projectReportService.updateById(projectReport);
+    @PostMapping("/updateStatus")
+    public R update(@RequestParam Integer id, @RequestParam String status, @RequestParam String returnReason) {
+        //修改产品报告的审核状态
+        return projectReportService.updateStatus(id, status, returnReason);
 
-        return R.ok();
     }
 
     /**

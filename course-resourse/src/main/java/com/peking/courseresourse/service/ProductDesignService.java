@@ -3,6 +3,7 @@ package com.peking.courseresourse.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import utils.PageUtils;
 import com.peking.courseresourse.entity.ProductDesignEntity;
+import utils.R;
 
 import java.util.Map;
 
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface ProductDesignService extends IService<ProductDesignEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    R updateStatus(Integer id, String status, String returnReason);
 }
 

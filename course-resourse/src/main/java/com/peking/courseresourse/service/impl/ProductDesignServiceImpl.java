@@ -1,6 +1,8 @@
 package com.peking.courseresourse.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.peking.courseresourse.entity.ElectronicJournalEntity;
 import dto.UserDTO;
 import org.springframework.stereotype.Service;
 
@@ -9,12 +11,14 @@ import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.transaction.annotation.Transactional;
 import utils.PageUtils;
 import utils.Query;
 
 import com.peking.courseresourse.dao.ProductDesignDao;
 import com.peking.courseresourse.entity.ProductDesignEntity;
 import com.peking.courseresourse.service.ProductDesignService;
+import utils.R;
 import utils.UserHolder;
 
 
@@ -37,6 +41,23 @@ public class ProductDesignServiceImpl extends ServiceImpl<ProductDesignDao, Prod
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    @Transactional
+    public R updateStatus(Integer id, String status, String returnReason) {
+        LambdaUpdateWrapper<ProductDesignEntity> updateWrapper = new LambdaUpdateWrapper<>();
+
+        updateWrapper.eq(ProductDesignEntity::getId, id);//作为条件
+        updateWrapper.set(ProductDesignEntity::getStatus, status);//设置想要更新的字段
+        updateWrapper.set(ProductDesignEntity::getReturnReason, returnReason);//设置想要更新的字段
+
+
+        //这里的实体类设置为空
+        if (!update(null, updateWrapper)) {
+            return R.error("修改失败");
+        }
+        return R.ok();
     }
 
 }

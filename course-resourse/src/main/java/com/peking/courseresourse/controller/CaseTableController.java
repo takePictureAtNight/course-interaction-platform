@@ -165,6 +165,7 @@ public class CaseTableController {
 //        return R.ok("上传成功");
 //    }
 //
+
     /**
      * 保存
      */
@@ -177,11 +178,10 @@ public class CaseTableController {
     /**
      * 修改
      */
-    @PostMapping("/update")
-    public R update(@RequestBody CaseTableEntity caseTable) {
-        caseTableService.updateById(caseTable);
-
-        return R.ok();
+    @PostMapping("/updateStatus")
+    public R update(@RequestParam Integer id, @RequestParam String status, @RequestParam String returnReason) {
+        //修改案例的审核状态
+        return caseTableService.updateStatus(id, status, returnReason);
     }
 
     /**
