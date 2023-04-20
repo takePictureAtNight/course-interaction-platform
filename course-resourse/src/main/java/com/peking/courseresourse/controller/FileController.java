@@ -45,8 +45,8 @@ public class FileController {
     private FileService fileService;
     @PostMapping("/upload")
     public R upload(MultipartFile[] files) throws Exception {
-        fileService.upload(files);
-        return R.ok("上传成功");
+        List<UploadDTO> upload = fileService.upload(files);
+        return R.ok("上传成功").put("list",upload);
     }
     //通用下载接口
     /**

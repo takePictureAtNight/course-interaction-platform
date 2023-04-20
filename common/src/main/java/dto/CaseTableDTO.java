@@ -62,11 +62,8 @@ public class CaseTableDTO {
      */
     private String status;
     /**
-     *
-     */
-    /*
     * 创建人 user_id
-    * */
+    */
     private Integer createBy;
 
     public Integer getId() {

@@ -67,14 +67,6 @@ public class UserEntity implements Serializable {
 		this.password = password;
 	}
 
-	public Integer getuserId() {
-		return userId;
-	}
-
-	public void setuserId(Integer userIdid) {
-		this.userId = userId;
-	}
-
 
 	public UserEntity() {
 	}

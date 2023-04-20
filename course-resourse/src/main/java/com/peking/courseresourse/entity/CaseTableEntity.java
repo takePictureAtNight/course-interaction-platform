@@ -75,6 +75,7 @@ public class CaseTableEntity implements Serializable {
 	/**
 	 * 1代表通过审核，0代表待审核
 	 */
+	@TableField()
 	private String status;
 	/**
 	 * 

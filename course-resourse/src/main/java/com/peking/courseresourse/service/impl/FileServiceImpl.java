@@ -1,5 +1,6 @@
 package com.peking.courseresourse.service.impl;
 
+import cn.hutool.core.util.IdUtil;
 import com.peking.courseresourse.service.FileService;
 import dto.UploadDTO;
 import exception.RException;
@@ -33,7 +34,7 @@ public class FileServiceImpl implements FileService {
             if (!".doc".equals("." + extension) && !".docx".equals("." + extension)) {
                 throw new RException("文件格式错误无法上传");
             }
-            String newFilename = new SimpleDateFormat("yyyMMddHHmmss").format(new Date()) + UUID.randomUUID() + "." + extension;
+            String newFilename = IdUtil.simpleUUID() + "." + extension;
             String path = null;
             try {
                 path = ResourceUtils.getURL("classpath:").getPath() + "static/files";
@@ -50,7 +51,7 @@ public class FileServiceImpl implements FileService {
             try {
                 file.transferTo(new File(datePath, newFilename));
                 UploadDTO u = new UploadDTO();
-                String resourceUrl = path + "/" + format + "/" + newFilename;
+                String resourceUrl = "/files/" + format + "/" + newFilename;
                 u.setResourceUrl(resourceUrl);
                 u.setOriginalFilename(originalFilename);
                 list.add(u);
