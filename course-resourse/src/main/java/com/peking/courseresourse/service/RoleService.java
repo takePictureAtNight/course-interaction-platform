@@ -1,10 +1,10 @@
 package com.peking.courseresourse.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import utils.PageUtils;
 import com.peking.courseresourse.entity.RoleEntity;
+import com.peking.courseresourse.entity.Tree;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * 系统角色
@@ -15,6 +15,6 @@ import java.util.Map;
  */
 public interface RoleService extends IService<RoleEntity> {
 
-    PageUtils queryPage(Map<String, Object> params);
+    List<Tree> tree();
 }
 

@@ -1,21 +1,16 @@
 package com.peking.courseresourse.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
+import annotation.Authority;
+import authority.UnifyAuthorityVerify;
 import com.peking.courseresourse.entity.PermissionEntity;
 import com.peking.courseresourse.service.PermissionService;
-import utils.PageUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import utils.R;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -32,53 +27,77 @@ public class PermissionController {
     private PermissionService permissionService;
 
     /**
-     * 列表
+     * 权限列表
+     * @return
      */
     @GetMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = permissionService.queryPage(params);
-
-        return R.ok().put("page", page);
+    @Authority(value = "permission:list",verify = UnifyAuthorityVerify.class)
+    public List<PermissionEntity> list(){
+        return permissionService.list();
     }
 
 
     /**
-     * 信息
+     * 新增权限时树形结构
+     * @return
      */
-    @GetMapping("/info/{id}")
-    public R info(@PathVariable("id") Integer id){
-		PermissionEntity permission = permissionService.getById(id);
+    @GetMapping("/treeSelect")
+    @Authority("permission:treeSelect")
+    public List<PermissionEntity> treeSelect(){
+        List<PermissionEntity> data = permissionService.treeSelect();
 
-        return R.ok().put("permission", permission);
+        return data;
     }
 
     /**
-     * 保存
+     * 添加权限
+     * @param permission
+     * @return
      */
-    @PostMapping("/save")
-    public R save(@RequestBody PermissionEntity permission){
-		permissionService.save(permission);
+    @PostMapping("/add")
+    @Authority("permission:add")
+    public R add(@RequestBody PermissionEntity permission){
+        permission.setIcon("fa "+permission.getIcon());
+        permissionService.save(permission);
 
         return R.ok();
     }
 
     /**
-     * 修改
+     * 修改权限
+     * @param permission
+     * @return
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
+    @Authority("permission:update")
     public R update(@RequestBody PermissionEntity permission){
-		permissionService.updateById(permission);
-
+        permission.setIcon("fa "+permission.getIcon());
+        permissionService.updateById(permission);
         return R.ok();
+
     }
 
     /**
-     * 删除
+     * 删除权限
+     * @param id
+     * @return
      */
-    @GetMapping("/delete")
-    public R delete( Integer id){
-		permissionService.removeById(id);
-        return R.ok();
+    @DeleteMapping("/delete/{id}")
+    @Authority("permission:delete")
+    public R delete(@PathVariable Integer id){
+        permissionService.removeMenu(id);
+        return R.ok().message("删除成功");
+    }
+
+
+    /**
+     * 初始化菜单
+     * @return
+     */
+    @GetMapping("/initMenu")
+    public Map<String,Object> initMenu(HttpServletRequest request){
+        Map<String,Object> data = permissionService.toTree(request);
+        return data;
     }
 
 }

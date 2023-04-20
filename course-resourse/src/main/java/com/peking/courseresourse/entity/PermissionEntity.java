@@ -1,11 +1,11 @@
 package com.peking.courseresourse.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
+import java.util.List;
 
 /**
  * 
@@ -19,22 +19,36 @@ import lombok.Data;
 public class PermissionEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
-	@TableId
+	@TableId(value = "id", type = IdType.AUTO)
 	private Integer id;
-	/**
-	 * 
-	 */
+
+	private Integer pId;
+
+	private String path;
+
+	private String href;
+
+	private String icon;
+
 	private String name;
-	/**
-	 * 
-	 */
-	private String controller;
-	/**
-	 * 
-	 */
-	private String action;
+
+	// -1:目录,0:菜单,1:按钮
+	private Integer isMenu;
+
+	private String target;
+
+	private Integer state;
+
+	@TableField(exist = false)
+	private List<PermissionEntity> children;
+
+	@TableLogic
+	private Integer isDeleted;
+
+	@TableField(fill = FieldFill.INSERT)
+	private Date gmtCreate;
+
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private Date gmtModifeld;
 
 }

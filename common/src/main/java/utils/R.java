@@ -10,9 +10,9 @@ package utils;
 
 import org.apache.http.HttpStatus;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
-
 /**
  * 返回数据
  *
@@ -20,6 +20,19 @@ import java.util.Map;
  */
 public class R extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
+
+
+
+	private int code;
+
+	private Boolean state;
+
+
+	private String message;
+
+	private Map<String,Object> data = new HashMap();
+
+	private long count;
 	
 	public R() {
 		put("code", 0);
@@ -54,7 +67,11 @@ public class R extends HashMap<String, Object> {
 	}
 	
 	public static R ok() {
-		return new R();
+		R responseUtils = new R();
+		responseUtils.setCode(0);
+		responseUtils.setState(true);
+		responseUtils.setMessage("成功");
+		return responseUtils;
 	}
 
 	public R put(String key, Object value) {
@@ -63,5 +80,49 @@ public class R extends HashMap<String, Object> {
 	}
 	public Object get(String key){
 		return super.get(key);
+	}
+
+	public R message(String message){
+		this.setMessage(message);
+		return this;
+	}
+	public R message(String message, Object ... objects){
+		this.setMessage(MessageFormat.format(message, objects));
+		return this;
+	}
+
+	public R data(Map<String,Object> map){
+		this.setData(map);
+		return this;
+	}
+
+	public R data(String key, Object value){
+		this.data.put(key,value);
+		return this;
+	}
+
+    public R count(long total) {
+		this.setCount(count);
+		return this;
+    }
+
+	public void setCode(int code) {
+		this.code = code;
+	}
+
+	public void setState(boolean state) {
+		this.state = state;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public void setData(Map<String, Object> data) {
+		this.data = data;
+	}
+
+	public void setCount(long count) {
+		this.count = count;
 	}
 }

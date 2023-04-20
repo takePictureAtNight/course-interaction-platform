@@ -1,11 +1,12 @@
 package com.peking.courseresourse.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 
 /**
  * 角色关联权限
@@ -16,25 +17,15 @@ import lombok.Data;
  */
 @Data
 @TableName("rbac_role_has_permissions")
+@EqualsAndHashCode(callSuper = false)
 public class RoleHasPermissionsEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
-	@TableId
+	@TableId(value = "id", type = IdType.AUTO)
 	private Integer id;
-	/**
-	 * 角色ID
-	 */
-	private Integer roleId;
-	/**
-	 * 权限ID
-	 */
-	private Integer permissionId;
-	/**
-	 * 
-	 */
-	private Date createdAt;
+
+	private Integer pId;
+
+	private Integer rId;
 
 }
