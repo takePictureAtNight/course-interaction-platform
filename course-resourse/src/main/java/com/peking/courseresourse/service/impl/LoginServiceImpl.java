@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.peking.courseresourse.dao.LoginDao;
 import com.peking.courseresourse.entity.UserEntity;
-import com.peking.courseresourse.mapper.UserMapper;
+import com.peking.courseresourse.dao.UserDao;
 import com.peking.courseresourse.result.Result;
 import com.peking.courseresourse.service.LoginService;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.UUID;
 public class LoginServiceImpl implements LoginService {
 
 
-    private UserMapper userMapper;
+    private UserDao userDao;
 
     @Override
     public Result login(LoginDao loginDao) {
@@ -29,7 +29,7 @@ public class LoginServiceImpl implements LoginService {
         //通过登录名查询用户
         QueryWrapper<UserEntity> wrapper = new QueryWrapper();
         wrapper.eq("login_name", loginDao.getUserName());
-        UserEntity uer=userMapper.selectOne(wrapper);
+        UserEntity uer=userDao.selectOne(wrapper);
         //比较密码
         if (uer!=null&&uer.getPassword().equals(loginDao.getPassword())){
             LoginVo loginVO=new LoginVo();

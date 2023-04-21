@@ -1,22 +1,23 @@
-package com.peking.courseresourse.entity;
+package com.peking.courseresourse.dto;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
- * 
+ * 调研数据表
  * 
  * @author yy
  * @email 3110311633@qq.com
- * @date 2023-03-14 20:52:08
+ * @date 2023-04-21 10:21:44
  */
 @Data
-@TableName("notifications")
-public class NotificationsEntity implements Serializable {
+@TableName("survey_data")
+public class SurveyDataListDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -27,22 +28,6 @@ public class NotificationsEntity implements Serializable {
 	/**
 	 * 
 	 */
-	private Integer senderId;
-	/**
-	 * 
-	 */
-	private Integer receiverId;
-	/**
-	 * 
-	 */
-	private String content;
-	/**
-	 * 
-	 */
 	private Date createTime;
-	/**
-	 * 
-	 */
-	private String status;
 
 }

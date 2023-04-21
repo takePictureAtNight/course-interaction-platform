@@ -5,7 +5,6 @@
 
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.peking.courseresourse.entity.ProjectReportEntity" id="projectReportMap">
-        <result property="int" column="int"/>
         <result property="projectName" column="project_name"/>
         <result property="keywords" column="keywords"/>
         <result property="projectCategory" column="project_category"/>
