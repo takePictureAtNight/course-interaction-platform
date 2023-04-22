@@ -19,6 +19,6 @@ public interface CaseTableService extends IService<CaseTableEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
 
-    void saveAll(CaseTableDTO caseTableDTO);
+    void saveAll(CaseTableEntity caseTableDTO);
 }
 

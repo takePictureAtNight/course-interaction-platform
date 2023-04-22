@@ -34,8 +34,6 @@ class CourseResourseApplicationTests {
     void test1(){
         List<UserEntity> list = new ArrayList<>();
         UserEntity userEntity = new UserEntity();
-        userEntity.setUserId(1);
-        userEntity.setUsername("张三");
         list.add(userEntity);
         System.out.println(userEntity);
     }

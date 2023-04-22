@@ -64,15 +64,15 @@ public class CaseTableController {
     }
 
     /**
-     * 信息
+     * 信息  我的资源  根据id查询
+     *
      */
     @GetMapping("/info/{id}")
     public R info(@PathVariable("id") Integer id) {
         CaseTableEntity caseTable = caseTableService.getById(id);
 
-        return R.ok().put("caseTable", caseTable);
+        return R.ok().put("data", caseTable);
     }
-
 
 //    /**
 //     * 通用下载接口
@@ -169,9 +169,9 @@ public class CaseTableController {
      * 保存
      */
     @PostMapping("/save")
-    public R save(CaseTableDTO caseTable) {
+    public R save(@RequestBody CaseTableEntity caseTable) {
         caseTableService.saveAll(caseTable);
-        return R.ok();
+        return R.ok("保存成功");
     }
 
     /**

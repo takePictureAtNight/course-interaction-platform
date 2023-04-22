@@ -1,7 +1,9 @@
 package com.peking.courseresourse.entity;
 
-import java.util.List;
+import lombok.Data;
 
+import java.util.List;
+@Data
 public class Tree {
 
     private Integer id;
