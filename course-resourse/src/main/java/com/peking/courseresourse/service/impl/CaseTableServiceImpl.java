@@ -54,19 +54,12 @@ public class CaseTableServiceImpl extends ServiceImpl<CaseTableDao, CaseTableEnt
     }
 
     @Override
-    public void saveAll(CaseTableDTO caseTable) {
-        MultipartFile[] files = caseTable.getFiles();
-        List<UploadDTO> list = fileService.upload(files);
-        List<CaseTableEntity> caseTableEntityList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            CaseTableEntity caseTable1 = new CaseTableEntity();
-            BeanUtils.copyProperties(caseTable,caseTable1);
-            UploadDTO uploadDTO = list.get(i);
-            caseTable1.setFileName(uploadDTO.getOriginalFilename());
-            caseTable1.setResourceUrl(uploadDTO.getResourceUrl());
-            caseTableEntityList.add(caseTable1);
-        }
-        this.saveBatch(caseTableEntityList);
+    public void saveAll(CaseTableEntity caseTable) {
+        //保存后状态为为审核0
+        caseTable.setStatus("0");
+        //保存用户id 创建人  //需登录完成后 现在是假的
+        caseTable.setCreateBy(12);
+        this.save(caseTable);
     }
 
     @Override
