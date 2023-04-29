@@ -5,12 +5,22 @@
 
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.peking.courseresourse.entity.UserEntity" id="userMap">
-        <result property="id" column="id"/>
-        <result property="username" column="username"/>
-        <result property="password" column="password"/>
         <result property="userId" column="user_id"/>
-        <result property="salt" column="salt"/>
+        <result property="username" column="username"/>
+        <result property="password" column="passsword"/>
+        <result property="realName" column="real_name"/>
+        <result property="number" column="number"/>
+        <result property="phone" column="phone"/>
+        <result property="createTime" column="create_time"/>
+        <result property="userType" column="user_type"/>
+        <result property="status" column="status"/>
     </resultMap>
+    <select id="loginByRoleId" resultType="com.peking.courseresourse.entity.UserEntity">
+        select * from tab_user tu where tu.role_id = #{roleId} and tu.username = #{username} and tu.password = #{password}
+    </select>
+    <select id="getRoleNameById" resultType="java.lang.String">
+        select role_name from tab_user tu join tab_role tr on tu.role_id = tr.role_id where tu.user_id = #{id};
+    </select>
 
 
 </mapper>

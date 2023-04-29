@@ -2,8 +2,13 @@ package com.peking.courseresourse.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.peking.courseresourse.entity.ElectronicJournalEntity;
+import com.peking.courseresourse.entity.ProductDesignEntity;
+import com.peking.courseresourse.entity.ProjectReportEntity;
+import com.peking.courseresourse.vo.UpdateStatusVo;
 import dto.UserDTO;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -31,12 +36,13 @@ public class WeeklyReportreCordsServiceImpl extends ServiceImpl<WeeklyReportreCo
         //周报记录搜索条件
         LambdaQueryWrapper<WeeklyReportreCordsEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper//.eq(WeeklyReportreCordsEntity::getCreateBy,user.getId())
-                .eq(WeeklyReportreCordsEntity::getInternshipCommunity, params.get("internshipCommunity"))
+                .eq(params.get("internshipCommunity") != null,WeeklyReportreCordsEntity::getInternshipCommunity, params.get("internshipCommunity"))
                 .ge(params.get("internshipBegintime") != null, WeeklyReportreCordsEntity::getInternshipBegintime, params.get("internshipBegintime"))
                 .le(params.get("internshipEndtime") != null, WeeklyReportreCordsEntity::getInternshipEndtime, params.get("internshipEndtime"))
                 .eq(params.get("weeklyreportName") != null, WeeklyReportreCordsEntity::getWeeklyreportName, params.get("weeklyreportName"))
                 .eq(params.get("keywords") != null, WeeklyReportreCordsEntity::getKeywords, params.get("keywords"))
-                .like(params.get("serviceTarget") != null, WeeklyReportreCordsEntity::getServiceTarget, params.get("serviceTarget"));
+                .like(params.get("serviceTarget") != null, WeeklyReportreCordsEntity::getServiceTarget, params.get("serviceTarget"))
+                .eq(WeeklyReportreCordsEntity::getStatus,1);
         IPage<WeeklyReportreCordsEntity> page = this.page(
                 new Query<WeeklyReportreCordsEntity>().getPage(params),
                 lambdaQueryWrapper
@@ -46,19 +52,24 @@ public class WeeklyReportreCordsServiceImpl extends ServiceImpl<WeeklyReportreCo
     }
 
     @Override
-    @Transactional
-    public R updateStatus(Integer id, String status, String returnReason) {
-        LambdaUpdateWrapper<WeeklyReportreCordsEntity> updateWrapper = new LambdaUpdateWrapper<>();
+    public R updateStatus(UpdateStatusVo updateStatusVo) {
+        UpdateWrapper<WeeklyReportreCordsEntity> wrapper = new UpdateWrapper<WeeklyReportreCordsEntity>().eq("id", updateStatusVo.getId());
+        Integer status = updateStatusVo.getStatus();
+        String returnReason = updateStatusVo.getReturnReason();
+        wrapper.set(status != null,"status",status);
+        wrapper.set(StringUtils.isNotBlank(returnReason),"return_reason",returnReason);
+        this.update(wrapper);
+        return R.ok();
+    }
 
-        updateWrapper.eq(WeeklyReportreCordsEntity::getId, id);//作为条件
-        updateWrapper.set(WeeklyReportreCordsEntity::getStatus, status);//设置想要更新的字段
-        updateWrapper.set(WeeklyReportreCordsEntity::getReturnReason, returnReason);//设置想要更新的字段
-
-
-        //这里的实体类设置为空
-        if (!update(null, updateWrapper)) {
-            return R.error("修改失败");
-        }
+    @Override
+    public R saveAll(WeeklyReportreCordsEntity weeklyReportreCords) {
+        Integer id = UserHolder.getUser().getId();
+        //保存后状态为为审核0
+        weeklyReportreCords.setStatus(0);
+        //保存用户id 创建人
+        weeklyReportreCords.setCreateBy(id);
+        this.save(weeklyReportreCords);
         return R.ok();
     }
 

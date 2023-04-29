@@ -1,29 +1,28 @@
 package com.peking.courseresourse.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
 
 /**
- * 仅该表中的用户可登录系统
+ * 
  * 
  * @author yy
  * @email 3110311633@qq.com
- * @date 2023-03-14 20:50:46
+ * @date 2023-04-23 12:46:02
  */
 @Data
-@TableName("rbac_user")
+@TableName("tab_user")
 public class UserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 * 用户id
 	 */
-	@TableId
-	private Integer id;
+	@TableId(type = IdType.AUTO)
+	private Integer userId;
 	/**
 	 * 用户名
 	 */
@@ -33,50 +32,31 @@ public class UserEntity implements Serializable {
 	 */
 	private String password;
 	/**
-	 * user_info表id
+	 * 真实姓名
 	 */
-	private Integer userId;
+	private String realName;
 	/**
-	 * 密码MD5盐
+	 * 学号/教师号
 	 */
-	private String salt;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-
-
-	public String getUserName() {
-		return username;
-	}
-
-	public void setUserName(String userName) {
-		this.username = userName;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-
-	public UserEntity() {
-	}
-
-
-
-
-
-
-
-
+	private String number;
+	/**
+	 * 联系方式
+	 */
+	private String phone;
+	/**
+	 * 创建时间
+	 */
+	@TableField(fill = FieldFill.INSERT)
+	private Date createTime;
+	/**
+	 * 00 系统用户 01 注册用户
+	 */
+	private String userType;
+	/**
+	 * 0代表未审核 1代表审核成功 2代表审核失败
+	 */
+	private Integer status;
+	//角色id(调整为1对多)
+	private Integer roleId;
 
 }

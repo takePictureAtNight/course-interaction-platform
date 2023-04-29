@@ -1,11 +1,14 @@
 package com.peking.courseresourse.controller;
 
 
+import annotation.SysLog;
 import cn.hutool.core.io.FileUtil;
 import com.peking.courseresourse.entity.*;
 import com.peking.courseresourse.service.*;
 import exception.RException;
 import dto.UploadDTO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ResourceUtils;
@@ -23,7 +26,7 @@ import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
+@Api(tags = "文件上传下载接口")
 @RestController
 @RequestMapping("/file")
 public class FileController {
@@ -42,22 +45,26 @@ public class FileController {
     @Autowired
     private FileService fileService;
     //模版上传
+    @SysLog("模版上传")
+    @ApiOperation("文件上传(保存到数据库)")
     @PostMapping("/upload")
     public R upload(MultipartFile file) {
         return fileService.upload(file);
     }
-    //其他5个上传通用
+    @ApiOperation("其他5个上传通用文件上传")
     @PostMapping("/other/upload")
     public R otherUpload(MultipartFile file){
         return fileService.otherUpload(file);
     }
     //分页参数
+    @ApiOperation("获取所有文件(模版)")
     @GetMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
-       PageUtils page =  fileService.queryPage(params);
+        PageUtils page =  fileService.queryPage(params);
         return R.ok().put("data", page);
     }
     //模版下载
+    @ApiOperation("文件下载")
     @GetMapping("/download")
     public R download(Integer id, HttpServletResponse response){
         return fileService.download(id,response);

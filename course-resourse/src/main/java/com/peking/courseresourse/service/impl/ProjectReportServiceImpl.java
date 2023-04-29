@@ -2,8 +2,12 @@ package com.peking.courseresourse.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.peking.courseresourse.entity.ElectronicJournalEntity;
+import com.peking.courseresourse.entity.ProductDesignEntity;
+import com.peking.courseresourse.vo.UpdateStatusVo;
 import dto.UserDTO;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -33,7 +37,8 @@ public class ProjectReportServiceImpl extends ServiceImpl<ProjectReportDao, Proj
         lambdaQueryWrapper//.eq(ProjectReportEntity::getCreateBy,user.getId())
                 .eq(params.get("projectName") != null, ProjectReportEntity::getProjectName, params.get("projectName"))
                 .eq(params.get("keywords") != null, ProjectReportEntity::getKeywords, params.get("keywords"))
-                .eq(params.get("projectCategory") != null, ProjectReportEntity::getProjectCategory, params.get("projectCategory"));
+                .eq(params.get("projectCategory") != null, ProjectReportEntity::getProjectCategory, params.get("projectCategory"))
+                .eq(ProjectReportEntity::getStatus,1);
         IPage<ProjectReportEntity> page = this.page(
                 new Query<ProjectReportEntity>().getPage(params),
                 lambdaQueryWrapper
@@ -43,19 +48,24 @@ public class ProjectReportServiceImpl extends ServiceImpl<ProjectReportDao, Proj
     }
 
     @Override
-    @Transactional
-    public R updateStatus(Integer id, String status, String returnReason) {
-        LambdaUpdateWrapper<ProjectReportEntity> updateWrapper = new LambdaUpdateWrapper<>();
+    public R updateStatus(UpdateStatusVo updateStatusVo) {
+        UpdateWrapper<ProjectReportEntity> wrapper = new UpdateWrapper<ProjectReportEntity>().eq("id", updateStatusVo.getId());
+        Integer status = updateStatusVo.getStatus();
+        String returnReason = updateStatusVo.getReturnReason();
+        wrapper.set(status != null,"status",status);
+        wrapper.set(StringUtils.isNotBlank(returnReason),"return_reason",returnReason);
+        this.update(wrapper);
+        return R.ok();
+    }
 
-        updateWrapper.eq(ProjectReportEntity::getId, id);//作为条件
-        updateWrapper.set(ProjectReportEntity::getStatus, status);//设置想要更新的字段
-        updateWrapper.set(ProjectReportEntity::getReturnReason, returnReason);//设置想要更新的字段
-
-
-        //这里的实体类设置为空
-        if (!update(null, updateWrapper)) {
-            return R.error("修改失败");
-        }
+    @Override
+    public R saveAll(ProjectReportEntity projectReport) {
+        Integer id = UserHolder.getUser().getId();
+        //保存后状态为为审核0
+       projectReport.setStatus(0);
+        //保存用户id 创建人  //需登录完成后 现在是假的
+        projectReport.setCreateBy(id);
+        this.save(projectReport);
         return R.ok();
     }
 
