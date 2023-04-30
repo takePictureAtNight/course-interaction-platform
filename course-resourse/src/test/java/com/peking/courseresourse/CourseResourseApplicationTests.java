@@ -6,7 +6,6 @@ import com.peking.courseresourse.dao.CaseTableDao;
 import com.peking.courseresourse.entity.CaseTableEntity;
 import com.peking.courseresourse.entity.UserEntity;
 import com.peking.courseresourse.service.CaseTableService;
-import com.peking.courseresourse.service.impl.ElectronicJournalServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,9 +17,6 @@ import java.util.List;
 class CourseResourseApplicationTests {
     @Autowired
     private CaseTableDao caseTableDao;
-    @Autowired
-    private ElectronicJournalServiceImpl electronicJournalService;
-
     @Test
     void contextLoads() {
     }
@@ -38,15 +34,8 @@ class CourseResourseApplicationTests {
     void test1(){
         List<UserEntity> list = new ArrayList<>();
         UserEntity userEntity = new UserEntity();
-        userEntity.setUserId(1);
-        //userEntity.setUsername("张三");
         list.add(userEntity);
         System.out.println(userEntity);
     }
 
-    @Test
-    void testUpdateStatus() {
-        electronicJournalService.updateStatus(1,"0","6606");
-
-    }
 }

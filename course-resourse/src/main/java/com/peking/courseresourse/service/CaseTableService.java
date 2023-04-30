@@ -5,7 +5,6 @@ import dto.CaseTableDTO;
 import org.springframework.web.multipart.MultipartFile;
 import utils.PageUtils;
 import com.peking.courseresourse.entity.CaseTableEntity;
-import utils.R;
 
 import java.util.Map;
 
@@ -20,8 +19,6 @@ public interface CaseTableService extends IService<CaseTableEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
 
-    void saveAll(CaseTableDTO caseTableDTO);
-
-    R updateStatus(Integer id, String status, String returnReason);
+    void saveAll(CaseTableEntity caseTableDTO);
 }
 
