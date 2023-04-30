@@ -1,7 +1,7 @@
 package com.peking.courseresourse.controller;
 
-import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.peking.courseresourse.service.SurveyDataListService;
@@ -84,6 +84,74 @@ public class SurveyDataController {
     }
 
     /**
-     * 统计分析
+     * 统计性别
      */
+    @GetMapping("/gender")
+    public R getGender() {
+        List<Map<String, Object>> gender = surveyDataService.getGender();
+        return R.ok().put("gender", gender);
+    }
+
+    /**
+     * 统计年龄
+     */
+    @GetMapping("/birth")
+    public R getBirth() {
+        List<Map<String, Object>> birth = surveyDataService.getBirth();
+        return R.ok().put("birth", birth);
+    }
+
+    /**
+     * 统计文化程度
+     */
+    @GetMapping("/edu")
+    public R getEdu() {
+        List<Map<String, Object>> edu = surveyDataService.getEdu();
+        return R.ok().put("edu", edu);
+    }
+
+    /**
+     * 统计婚姻状况
+     */
+    @GetMapping("/marriage")
+    public R getMarriage() {
+        List<Map<String, Object>> marriage = surveyDataService.getMarriage();
+        return R.ok().put("marriage", marriage);
+    }
+
+    /**
+     * 统计同住
+     */
+    @GetMapping("/cohabit")
+    public R getCohabit() {
+        List<Map<String, Object>> cohabit = surveyDataService.getCohabit();
+        return R.ok().put("cohabit", cohabit);
+    }
+
+    /**
+     * 统计收入
+     */
+    @GetMapping("/income")
+    public R getIncome() {
+        List<Map<String, Object>> income = surveyDataService.getIncome();
+        return R.ok().put("income", income);
+    }
+
+    /**
+     * 统计慢性病
+     */
+    @GetMapping("/disease")
+    public R getDisease() {
+        List<Map<String, Object>> disease = surveyDataService.getDisease();
+        return R.ok().put("disease", disease);
+    }
+
+    /**
+     * 统计社区服务
+     */
+    @GetMapping("/service")
+    public R getService() {
+        List<Map<String, Object>> service = surveyDataService.getService();
+        return R.ok().put("service", service);
+    }
 }
