@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import utils.PageUtils;
 import com.peking.courseresourse.entity.SurveyDataEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +17,21 @@ import java.util.Map;
 public interface SurveyDataService extends IService<SurveyDataEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    List<Map<String, Object>> getGender();
+
+    List<Map<String, Object>> getBirth();
+
+    List<Map<String, Object>> getEdu();
+
+    List<Map<String, Object>> getMarriage();
+
+    List<Map<String, Object>> getCohabit();
+
+    List<Map<String, Object>> getIncome();
+
+    List<Map<String, Object>> getDisease();
+
+    List<Map<String, Object>> getService();
 }
 
