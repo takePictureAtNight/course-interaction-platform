@@ -45,7 +45,7 @@ public class FileController {
     @Autowired
     private FileService fileService;
     //模版上传
-    @SysLog("模版上传")
+    //@SysLog("模版上传")
     @ApiOperation("文件上传(保存到数据库)")
     @PostMapping("/upload")
     public R upload(MultipartFile file) {
@@ -62,6 +62,12 @@ public class FileController {
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page =  fileService.queryPage(params);
         return R.ok().put("data", page);
+    }
+    @ApiOperation("根据id删除")
+    @GetMapping("/delete")
+    public R delete(Integer id){
+        fileService.removeById(id);
+        return R.ok();
     }
     //模版下载
     @ApiOperation("文件下载")

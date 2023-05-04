@@ -53,7 +53,7 @@ public class CaseTableServiceImpl extends ServiceImpl<CaseTableDao, CaseTableEnt
                 .like(params.get("caseName") != null, CaseTableEntity::getCaseName, params.get("caseName"))
                 .eq(params.get("keywords") != null, CaseTableEntity::getKeywords, params.get("keywords"))
                 .like(params.get("serviceTarget") != null, CaseTableEntity::getServiceTarget, params.get("serviceTarget"))
-                .eq(CaseTableEntity::getCaseType, params.get("caseType"))
+                //.eq(CaseTableEntity::getCaseType, params.get("caseType"))
                 .eq(params.get("type") != null,CaseTableEntity::getType, params.get("type"))
                 .eq(CaseTableEntity::getStatus,1);
         IPage<CaseTableEntity> page = this.page(

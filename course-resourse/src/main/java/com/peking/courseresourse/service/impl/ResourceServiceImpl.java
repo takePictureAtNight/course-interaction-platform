@@ -85,36 +85,44 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public R getComPie() {
         //承泽园，畅春园，中关园，燕北园，燕园街道，朗润园，蔚秀园，燕东园
-        long c1 = caseTableService.count(new QueryWrapper<CaseTableEntity>().eq("internship_community", "承泽园"));
-        long c2 = caseTableService.count(new QueryWrapper<CaseTableEntity>().eq("internship_community", "畅春园"));
-        long c3 = caseTableService.count(new QueryWrapper<CaseTableEntity>().eq("internship_community", "中关园"));
-        long c4 = caseTableService.count(new QueryWrapper<CaseTableEntity>().eq("internship_community", "燕北园"));
-        long c5 = caseTableService.count(new QueryWrapper<CaseTableEntity>().eq("internship_community", "燕园街道"));
-        long c6 = caseTableService.count(new QueryWrapper<CaseTableEntity>().eq("internship_community", "朗润园"));
-        long c7 = caseTableService.count(new QueryWrapper<CaseTableEntity>().eq("internship_community", "蔚秀园"));
-        long c8 = caseTableService.count(new QueryWrapper<CaseTableEntity>().eq("internship_community", "燕东园"));
-        long e1 = electronicJournalService.count(new QueryWrapper<ElectronicJournalEntity>().eq("internship_community", "承泽园"));
-        long e2 = electronicJournalService.count(new QueryWrapper<ElectronicJournalEntity>().eq("internship_community", "畅春园"));
-        long e3 = electronicJournalService.count(new QueryWrapper<ElectronicJournalEntity>().eq("internship_community", "中关园"));
-        long e4 = electronicJournalService.count(new QueryWrapper<ElectronicJournalEntity>().eq("internship_community", "燕北园"));
-        long e5 = electronicJournalService.count(new QueryWrapper<ElectronicJournalEntity>().eq("internship_community", "燕园街道"));
-        long e6 = electronicJournalService.count(new QueryWrapper<ElectronicJournalEntity>().eq("internship_community", "朗润园"));
-        long e7 = electronicJournalService.count(new QueryWrapper<ElectronicJournalEntity>().eq("internship_community", "蔚秀园"));
-        long e8 = electronicJournalService.count(new QueryWrapper<ElectronicJournalEntity>().eq("internship_community", "燕东园"));
+        long c1 = caseTableService.count(new QueryWrapper<CaseTableEntity>().eq("internship_community", "承泽园").eq("status", 1));
+        long c2 = caseTableService.count(new QueryWrapper<CaseTableEntity>().eq("internship_community", "畅春园").eq("status", 1));
+        long c3 = caseTableService.count(new QueryWrapper<CaseTableEntity>().eq("internship_community", "中关园").eq("status", 1));
+        long c4 = caseTableService.count(new QueryWrapper<CaseTableEntity>().eq("internship_community", "燕北园").eq("status", 1));
+        long c5 = caseTableService.count(new QueryWrapper<CaseTableEntity>().eq("internship_community", "燕园街道").eq("status", 1));
+        long c6 = caseTableService.count(new QueryWrapper<CaseTableEntity>().eq("internship_community", "朗润园").eq("status", 1));
+        long c7 = caseTableService.count(new QueryWrapper<CaseTableEntity>().eq("internship_community", "蔚秀园").eq("status", 1));
+        long c8 = caseTableService.count(new QueryWrapper<CaseTableEntity>().eq("internship_community", "燕东园").eq("status", 1));
+        long e1 = electronicJournalService.count(new QueryWrapper<ElectronicJournalEntity>().eq("internship_community", "承泽园").eq("status", 1));
+        long e2 = electronicJournalService.count(new QueryWrapper<ElectronicJournalEntity>().eq("internship_community", "畅春园").eq("status", 1));
+        long e3 = electronicJournalService.count(new QueryWrapper<ElectronicJournalEntity>().eq("internship_community", "中关园").eq("status", 1));
+        long e4 = electronicJournalService.count(new QueryWrapper<ElectronicJournalEntity>().eq("internship_community", "燕北园").eq("status", 1));
+        long e5 = electronicJournalService.count(new QueryWrapper<ElectronicJournalEntity>().eq("internship_community", "燕园街道").eq("status", 1));
+        long e6 = electronicJournalService.count(new QueryWrapper<ElectronicJournalEntity>().eq("internship_community", "朗润园").eq("status", 1));
+        long e7 = electronicJournalService.count(new QueryWrapper<ElectronicJournalEntity>().eq("internship_community", "蔚秀园").eq("status", 1));
+        long e8 = electronicJournalService.count(new QueryWrapper<ElectronicJournalEntity>().eq("internship_community", "燕东园").eq("status", 1));
+        long n1 = weeklyReportreCordsService.count(new QueryWrapper<WeeklyReportreCordsEntity>().eq("internship_community", "承泽园").eq("status", 1));
+        long n2 = weeklyReportreCordsService.count(new QueryWrapper<WeeklyReportreCordsEntity>().eq("internship_community", "畅春园").eq("status", 1));
+        long n3 = weeklyReportreCordsService.count(new QueryWrapper<WeeklyReportreCordsEntity>().eq("internship_community", "中关园").eq("status", 1));
+        long n4 = weeklyReportreCordsService.count(new QueryWrapper<WeeklyReportreCordsEntity>().eq("internship_community", "燕北园").eq("status", 1));
+        long n5 = weeklyReportreCordsService.count(new QueryWrapper<WeeklyReportreCordsEntity>().eq("internship_community", "燕园街道").eq("status", 1));
+        long n6 = weeklyReportreCordsService.count(new QueryWrapper<WeeklyReportreCordsEntity>().eq("internship_community", "朗润园").eq("status", 1));
+        long n7 = weeklyReportreCordsService.count(new QueryWrapper<WeeklyReportreCordsEntity>().eq("internship_community", "蔚秀园").eq("status", 1));
+        long n8 = weeklyReportreCordsService.count(new QueryWrapper<WeeklyReportreCordsEntity>().eq("internship_community", "燕东园").eq("status", 1));
         List<Echarts> list = new ArrayList<>();
-        list.add(new Echarts("承泽园", c1 + e1));
-        list.add(new Echarts("畅春园", c2 + e2));
-        list.add(new Echarts("中关园", c3 + e3));
-        list.add(new Echarts("燕北园", c4 + e4));
-        list.add(new Echarts("燕园街道", c5 + e5));
-        list.add(new Echarts("朗润园", c6 + e6));
-        list.add(new Echarts("蔚秀园", c7 + e7));
-        list.add(new Echarts("燕东园", c8 + e8));
+        list.add(new Echarts("承泽园", c1 + e1 + n1));
+        list.add(new Echarts("畅春园", c2 + e2 + n2));
+        list.add(new Echarts("中关园", c3 + e3 + n3));
+        list.add(new Echarts("燕北园", c4 + e4 + n4));
+        list.add(new Echarts("燕园街道", c5 + e5 + n5));
+        list.add(new Echarts("朗润园", c6 + e6 + n6));
+        list.add(new Echarts("蔚秀园", c7 + e7 + n7));
+        list.add(new Echarts("燕东园", c8 + e8 + n8));
         return R.ok().put("list", list);
     }
 
     @Override
-    public void preview(Integer id, Integer type, HttpServletResponse response){
+    public void preview(Integer id, Integer type, HttpServletResponse response) {
         String resourceUrl = "";
         String fileName = "";
         switch (type) {
@@ -148,7 +156,7 @@ public class ResourceServiceImpl implements ResourceService {
         }
         String path;
         try {
-            path  = ResourceUtils.getURL("classpath:").getPath()+"static"+resourceUrl;
+            path = ResourceUtils.getURL("classpath:").getPath() + "static" + resourceUrl;
         } catch (FileNotFoundException e) {
             throw new RException("文件找不到");
         }
@@ -158,7 +166,7 @@ public class ResourceServiceImpl implements ResourceService {
             throw new RException("编码失败");
         }
         byte[] bytes = FileUtil.readBytes(path);
-        OutputStream outputStream ;
+        OutputStream outputStream;
         try {
             outputStream = response.getOutputStream();
             outputStream.write(bytes);

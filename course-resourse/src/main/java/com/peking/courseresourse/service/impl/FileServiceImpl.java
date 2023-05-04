@@ -46,14 +46,12 @@ public class FileServiceImpl extends ServiceImpl<FilesDao, FilesEntity> implemen
     public UploadDTO commonUpload(MultipartFile file){
         if (file == null) {
             throw new RException("上传文件不能为空");
-//            return R.error("上传文件不能为空");
         }
-
         String originalFilename = file.getOriginalFilename();
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         System.out.println(extension);
-        if (!".doc".equals("." + extension) && !".docx".equals("." + extension)) {
-            throw new RException("文件格式错误无法上传");
+        if (!".ppt".equals("." + extension) && !".pptx".equals("." + extension) && !".doc".equals("." + extension) && !".docx".equals("." + extension)) {
+                throw new RException("文件格式错误无法上传");
         }
         String newFilename = new SimpleDateFormat("yyyMMddHHmmss").format(new Date()) + UUID.randomUUID() + "." + extension;
         String path = null;
@@ -130,4 +128,5 @@ public class FileServiceImpl extends ServiceImpl<FilesDao, FilesEntity> implemen
         UploadDTO uploadDTO = commonUpload(file);
         return R.ok("上传成功").put("data",uploadDTO);
     }
+
 }

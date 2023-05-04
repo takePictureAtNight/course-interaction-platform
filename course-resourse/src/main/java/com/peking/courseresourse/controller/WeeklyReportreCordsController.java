@@ -72,7 +72,7 @@ public class WeeklyReportreCordsController {
      */
     @ApiOperation("审核案例库上传")
     @PostMapping("/updateStatus")
-    public R update(UpdateStatusVo updateStatusVo) {
+    public R update(@RequestBody UpdateStatusVo updateStatusVo) {
         //修改产品报告的审核状态
         return weeklyReportreCordsService.updateStatus(updateStatusVo);
 
