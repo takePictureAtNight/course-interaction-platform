@@ -1,6 +1,7 @@
 package com.peking.courseresourse.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.peking.courseresourse.vo.UpdateStatusVo;
 import utils.PageUtils;
 import com.peking.courseresourse.entity.WeeklyReportreCordsEntity;
 import utils.R;
@@ -18,6 +19,8 @@ public interface WeeklyReportreCordsService extends IService<WeeklyReportreCords
 
     PageUtils queryPage(Map<String, Object> params);
 
-    R updateStatus(Integer id, String status, String returnReason);
+    R updateStatus(UpdateStatusVo updateStatusVo);
+
+    R saveAll(WeeklyReportreCordsEntity weeklyReportreCords);
 }
 

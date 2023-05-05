@@ -1,6 +1,7 @@
 package com.peking.courseresourse.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,11 @@ import utils.R;
 
 
 /**
- * 系统角色
+ * 
  *
  * @author yy
  * @email 3110311633@qq.com
- * @date 2023-03-14 20:50:46
+ * @date 2023-04-23 12:46:02
  */
 @RestController
 @RequestMapping("courseresourse/role")
@@ -37,7 +38,6 @@ public class RoleController {
     @GetMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = roleService.queryPage(params);
-
         return R.ok().put("page", page);
     }
 
@@ -45,9 +45,9 @@ public class RoleController {
     /**
      * 信息
      */
-    @GetMapping("/info/{id}")
-    public R info(@PathVariable("id") Integer id){
-		RoleEntity role = roleService.getById(id);
+    @GetMapping("/info/{roleId}")
+    public R info(@PathVariable("roleId") Integer roleId){
+		RoleEntity role = roleService.getById(roleId);
 
         return R.ok().put("role", role);
     }
@@ -76,8 +76,8 @@ public class RoleController {
      * 删除
      */
     @GetMapping("/delete")
-    public R delete( Integer id){
-		roleService.removeById(id);
+    public R delete( Integer roleId){
+		roleService.removeById(roleId);
         return R.ok();
     }
 

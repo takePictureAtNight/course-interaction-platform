@@ -1,9 +1,6 @@
 package com.peking.courseresourse.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -23,7 +20,7 @@ public class ElectronicJournalEntity implements Serializable {
     /**
      * 主键
      */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Integer id;
     /**
      * 实习社区
@@ -72,7 +69,7 @@ public class ElectronicJournalEntity implements Serializable {
     /**
      * 1代表通过审核，0代表待审核
      */
-    private String status;
+    private Integer status;
     /**
      * 文件名称
      */

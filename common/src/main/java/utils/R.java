@@ -8,6 +8,7 @@
 
 package utils;
 
+import io.swagger.annotations.ApiModel;
 import org.apache.http.HttpStatus;
 
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import java.util.Map;
  *
  * @author Mark sunlightcs@gmail.com
  */
+@ApiModel("统一返回结果")
 public class R extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
 	

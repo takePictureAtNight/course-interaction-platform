@@ -22,4 +22,5 @@ public interface FileService extends IService<FilesEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     R otherUpload(MultipartFile file);
+
 }

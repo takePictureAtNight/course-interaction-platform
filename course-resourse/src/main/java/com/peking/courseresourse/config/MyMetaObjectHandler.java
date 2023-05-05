@@ -15,7 +15,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         log.info("start insert fill ....");
-        this.strictInsertFill(metaObject, "uploadresourceDate", Date.class, new Date()); // 起始版本 3.3.0(推荐使用)
+        this.strictInsertFill(metaObject, "uploadresourceDate", Date.class, new Date())
+                .strictInsertFill(metaObject, "createTime", Date.class, new Date()); // 起始版本 3.3.0(推荐使用)
     }
 
     @Override

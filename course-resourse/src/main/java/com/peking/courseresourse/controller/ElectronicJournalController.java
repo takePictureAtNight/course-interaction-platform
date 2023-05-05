@@ -3,6 +3,9 @@ package com.peking.courseresourse.controller;
 
 import java.util.Map;
 
+import com.peking.courseresourse.vo.UpdateStatusVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +25,7 @@ import utils.R;
  * @email 3110311633@qq.com
  * @date 2023-03-14 20:49:11
  */
+@Api(tags = "电子期刊接口")
 @RestController
 @RequestMapping("courseresourse/electronicjournal")
 public class ElectronicJournalController {
@@ -31,11 +35,17 @@ public class ElectronicJournalController {
     /**
      * 列表
      */
+    @ApiOperation("多条件查询")
     @GetMapping("/list")
     public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = electronicJournalService.queryPage(params);
 
         return R.ok().put("page", page);
+    }
+    @ApiOperation("审核案例库上传")
+    @PostMapping("/updateStatus")
+    public R updateStatus(@RequestBody UpdateStatusVo updateStatusVo){
+        return electronicJournalService.updateStatus(updateStatusVo);
     }
 
 
@@ -52,22 +62,22 @@ public class ElectronicJournalController {
     /**
      * 保存
      */
+    @ApiOperation("上传保存")
     @PostMapping("/save")
     public R save(@RequestBody ElectronicJournalEntity electronicJournal) {
-        electronicJournalService.save(electronicJournal);
+       return  electronicJournalService.saveAll(electronicJournal);
 
-        return R.ok();
     }
 
     /**
      * 修改
      */
-    @PostMapping("/updateStatus")
-    public R update(@RequestParam Integer id, @RequestParam String status, @RequestParam String returnReason) {
-        //修改电子期刊的审核状态
-        return electronicJournalService.updateStatus(id, status, returnReason);
-
-    }
+//    @PostMapping("/updateStatus")
+//    public R update(@RequestParam Integer id, @RequestParam String status, @RequestParam String returnReason) {
+//        //修改电子期刊的审核状态
+//        return electronicJournalService.updateStatus(id, status, returnReason);
+//
+//    }
 
     /**
      * 删除

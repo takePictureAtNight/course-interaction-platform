@@ -1,8 +1,8 @@
 package com.peking.courseresourse.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.peking.courseresourse.vo.UpdateStatusVo;
 import dto.CaseTableDTO;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import utils.PageUtils;
 import com.peking.courseresourse.entity.CaseTableEntity;
@@ -23,7 +23,6 @@ public interface CaseTableService extends IService<CaseTableEntity> {
 
     void saveAll(CaseTableEntity caseTableDTO);
 
-    @Transactional
-    R updateStatus(Integer id, String status, String returnReason);
+    R updateStatus(UpdateStatusVo updateStatusVo);
 }
 

@@ -11,14 +11,17 @@ import com.peking.courseresourse.entity.FilesEntity;
 import com.peking.courseresourse.entity.UserInfoEntity;
 import com.peking.courseresourse.service.FileService;
 import dto.UploadDTO;
+import dto.UserDTO;
 import exception.RException;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 import utils.PageUtils;
 import utils.Query;
 import utils.R;
+import utils.UserHolder;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -35,21 +38,20 @@ public class FileServiceImpl extends ServiceImpl<FilesDao, FilesEntity> implemen
             filesEntity.setFileName(uploadDTO.getOriginalFilename());
             filesEntity.setUploadTime(new Date());
             filesEntity.setResourceUrl(uploadDTO.getResourceUrl());
-            filesEntity.setUserId(10);
+        UserDTO user = UserHolder.getUser();
+        filesEntity.setUserId(user.getId());
             save(filesEntity);
         return R.ok("上传成功");
     }
     public UploadDTO commonUpload(MultipartFile file){
         if (file == null) {
             throw new RException("上传文件不能为空");
-//            return R.error("上传文件不能为空");
         }
-
         String originalFilename = file.getOriginalFilename();
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         System.out.println(extension);
-        if (!".doc".equals("." + extension) && !".docx".equals("." + extension)) {
-            throw new RException("文件格式错误无法上传");
+        if (!".ppt".equals("." + extension) && !".pptx".equals("." + extension) && !".doc".equals("." + extension) && !".docx".equals("." + extension)) {
+                throw new RException("文件格式错误无法上传");
         }
         String newFilename = new SimpleDateFormat("yyyMMddHHmmss").format(new Date()) + UUID.randomUUID() + "." + extension;
         String path = null;
@@ -109,11 +111,15 @@ public class FileServiceImpl extends ServiceImpl<FilesDao, FilesEntity> implemen
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
+        QueryWrapper<FilesEntity> wrapper = new QueryWrapper<>();
+        String key = (String) params.get("key");
+        if(StringUtils.isNotBlank(key)){
+            wrapper.like("file_name",key);
+        }
         IPage<FilesEntity> page = this.page(
                 new Query<FilesEntity>().getPage(params),
-                new QueryWrapper<>()
+                wrapper
         );
-
         return new PageUtils(page);
     }
 
@@ -122,4 +128,5 @@ public class FileServiceImpl extends ServiceImpl<FilesDao, FilesEntity> implemen
         UploadDTO uploadDTO = commonUpload(file);
         return R.ok("上传成功").put("data",uploadDTO);
     }
+
 }
