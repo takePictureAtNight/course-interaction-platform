@@ -65,7 +65,7 @@ public class SurveyDataServiceImpl extends ServiceImpl<SurveyDataDao, SurveyData
 
     @Override
     public List<Map<String, Object>> getCohabit() {
-        String[] col = {"", "b42", "b43", "b44", "b45", "b46", "b47"};
+        String[] col = {"b41", "b42", "b43", "b44", "b45", "b46", "b47"};
         String[] name = {"单独居住", "配偶/伴侣", "(岳) 父母", "儿子/儿媳", "女儿/女婿", "（外、重）孙子女", "保姆"};
         List<Map<String, Object>> list = new ArrayList<>();
         for (int i = 0; i < col.length; i++) {
